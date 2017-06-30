@@ -5,7 +5,6 @@ namespace BlockHorizons\BlockQuests\gui\types;
 use BlockHorizons\BlockQuests\BlockQuests;
 use BlockHorizons\BlockQuests\gui\BaseGui;
 use BlockHorizons\BlockQuests\gui\GuiUtils;
-use pocketmine\item\Item;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat as TF;
 
@@ -39,9 +38,14 @@ class QuestCreatingGui extends BaseGui {
 	public function openGui() {
 		$this->send();
 		$this->player->sendMessage($this->initMessage);
+		$this->getPlugin()->getGuiHandler()->setUsingGui($this->player, true, $this);
 	}
 
-	public function closeGui() {
+	public function closeGui(bool $cancelled = true) {
+		if(!$cancelled) {
+			// Process input.
+		}
 		$this->player->getInventory()->setContents($this->previousContents);
+		$this->getPlugin()->getGuiHandler()->setUsingGui($this->player, false, $this);
 	}
 }

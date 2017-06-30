@@ -55,4 +55,11 @@ abstract class BaseGui {
 	public function getPlayer(): Player {
 		return $this->player;
 	}
+
+	/**
+	 * @param bool $cancelled
+	 */
+	public abstract function closeGui(bool $cancelled = true);
+
+	public abstract function openGui();
 }
