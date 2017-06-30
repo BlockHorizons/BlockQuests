@@ -2,8 +2,24 @@
 name: "BlockQuests"
 author: "BlockHorizons"
 version: 0.99.0
-main: "BlockHorizons\BlockQuests\BlockQuests
+main: "BlockHorizons\BlockQuests\BlockQuests"
 api:
 - 3.0.0-ALPHA5
 - 3.0.0-ALPHA6
+
+permissions:
+  blockquests:
+    default: false
+    description: "Allows access to all BlockQuest features."
+    children:
+      blockquests.command:
+        default: false
+        description: "Allows access to all BlockQuest commands."
+        children:
+          blockquests.command.create:
+            default: op
+            description: "Allows access to creating a quest."
+          blockquests.command.edit:
+            default: op
+            description: "Allows access to editing a quest."
 ...
