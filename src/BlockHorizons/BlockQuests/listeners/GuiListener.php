@@ -89,9 +89,9 @@ class GuiListener implements Listener {
 	 */
 	public function onInteract(PlayerInteractEvent $event) {
 		if($this->getPlugin()->getGuiHandler()->isUsingGui($event->getPlayer())) {
-			if($event->getItem()->getNamedTag()->namedtag->bqGuiType === GuiUtils::TYPE_CANCEL) {
+			if($event->getItem()->getNamedTag()->bqGuiType === GuiUtils::TYPE_CANCEL) {
 				$this->getPlugin()->getGuiHandler()->setUsingGui($event->getPlayer(), false, $this->getPlugin()->getGuiHandler()->getGuiById($this->getPlugin()->getGuiHandler()->getGuiIdByPlayer($event->getPlayer())));
-			} elseif($event->getItem()->getNamedTag()->namedtag->bqGuiType === GuiUtils::TYPE_FINALIZE) {
+			} elseif($event->getItem()->getNamedTag()->bqGuiType === GuiUtils::TYPE_FINALIZE) {
 				$this->getPlugin()->getGuiHandler()->setUsingGui($event->getPlayer(), false, $this->getPlugin()->getGuiHandler()->getGuiById($this->getPlugin()->getGuiHandler()->getGuiIdByPlayer($event->getPlayer())), false);
 			}
 		}

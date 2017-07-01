@@ -49,7 +49,7 @@ class GuiUtils {
 			$item->setLore($lore);
 		}
 		$nbt = $item->getNamedTag() ?? new CompoundTag("", []);
-		$nbt->namedtag->bqGuiType = $type;
+		$nbt->bqGuiType = $type;
 		$item->setNamedTag($nbt);
 		return $item;
 	}
