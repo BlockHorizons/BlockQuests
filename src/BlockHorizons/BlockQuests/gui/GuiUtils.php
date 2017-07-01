@@ -4,6 +4,7 @@ namespace BlockHorizons\BlockQuests\gui;
 
 use pocketmine\item\Item;
 use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\IntTag;
 use pocketmine\utils\TextFormat;
 
 class GuiUtils {
@@ -51,7 +52,7 @@ class GuiUtils {
 			$item->setLore($lore);
 		}
 		$nbt = $item->getNamedTag() ?? new CompoundTag("", []);
-		$nbt->bqGuiType = $type;
+		$nbt->bqGuiType = new IntTag("bqGuiType", $type);
 		$item->setNamedTag($nbt);
 		return $item;
 	}
