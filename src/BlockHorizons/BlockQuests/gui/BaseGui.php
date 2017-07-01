@@ -103,8 +103,10 @@ abstract class BaseGui {
 		$this->getPlugin()->getGuiHandler()->setUsingGui($this->player, true, $this);
 	}
 
-	public function closeGui() {
+	/**
+	 * @param bool $cancelled
+	 */
+	public function closeGui(bool $cancelled = true) {
 		$this->player->getInventory()->setContents($this->previousContents);
-		$this->getPlugin()->getGuiHandler()->setUsingGui($this->player, false, $this);
 	}
 }
