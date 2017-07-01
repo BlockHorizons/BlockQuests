@@ -3,6 +3,7 @@
 namespace BlockHorizons\BlockQuests\gui;
 
 use BlockHorizons\BlockQuests\BlockQuests;
+use BlockHorizons\BlockQuests\quests\Quest;
 use pocketmine\item\Item;
 use pocketmine\Player;
 
@@ -24,6 +25,9 @@ abstract class BaseGui {
 	protected $defaults = [];
 	/** @var int */
 	protected $page = 1;
+
+	/** @var Quest */
+	private $quest;
 
 	public function __construct(BlockQuests $plugin, Player $player) {
 		$this->plugin = $plugin;
@@ -65,7 +69,7 @@ abstract class BaseGui {
 		return $this->page;
 	}
 
-	protected function send() {
+	protected function sendInitial() {
 		$this->previousContents = $this->player->getInventory()->getContents();
 		for($i = 0; $i < $this->player->getInventory()->gethotBarSize(); $i++) {
 			$this->player->getInventory()->clear($i);
@@ -84,7 +88,7 @@ abstract class BaseGui {
 	 * @return bool
 	 */
 	public function goToPage(int $pageNumber): bool {
-		if($pageNumber < 1 || $pageNumber > count($this->defaults["dynamic"])) {
+		if($pageNumber < 1 || $pageNumber > (count($this->defaults["dynamic"]) + 1)) {
 			return false;
 		}
 		for($i = 4; $i < 8; $i++) {
@@ -98,7 +102,7 @@ abstract class BaseGui {
 	}
 
 	public function openGui() {
-		$this->send();
+		$this->sendInitial();
 		$this->player->sendMessage($this->initMessage);
 		$this->getPlugin()->getGuiHandler()->setUsingGui($this->player, true, $this);
 	}
@@ -108,5 +112,26 @@ abstract class BaseGui {
 	 */
 	public function closeGui(bool $cancelled = true) {
 		$this->player->getInventory()->setContents($this->previousContents);
+
+		if(!$cancelled && isset($this->quest)) {
+			$this->quest->store();
+		}
+	}
+
+	/**
+	 * @param Item  $item
+	 * @param mixed $value
+	 *
+	 * @return bool
+	 */
+	public function callBackGuiItem(Item $item, $value): bool {
+		if(!isset($this->quest)) {
+			$this->quest = new Quest();
+		}
+		if($item->getNamedTag()->bqGuiInputMode->getValue() === "") {
+			return false;
+		}
+		$this->quest->{$item->getNamedTag()->bqGuiInputMode->getValue()} = $value;
+		return true;
 	}
 }

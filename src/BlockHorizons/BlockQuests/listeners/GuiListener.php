@@ -11,6 +11,7 @@ use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemHeldEvent;
 use pocketmine\event\player\PlayerQuitEvent;
+use pocketmine\item\Item;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 
@@ -34,7 +35,42 @@ class GuiListener implements Listener {
 	 */
 	public function onChat(PlayerChatEvent $event) {
 		if($this->getPlugin()->getGuiHandler()->isUsingGui($event->getPlayer())) {
-			// TODO: Handle
+			$output = null;
+			$gui = $this->getPlugin()->getGuiHandler()->getGui($event->getPlayer());
+			$item = $event->getPlayer()->getInventory()->getItemInHand();
+			$input = $event->getMessage();
+			switch($item->getNamedTag()->bqGuiInputType->getValue()) {
+				case GuiUtils::TYPE_ENTER_ITEMS:
+					$nameList = [];
+					$inputItems = explode(",", $input);
+					foreach($inputItems as &$inputItem) {
+						if(is_numeric($inputItem)) {
+							$inputItem = Item::get((int) $inputItem);
+						} else {
+							$inputItem = Item::fromString($inputItem);
+						}
+						$nameList[] = $inputItem->getName();
+					}
+					$event->getPlayer()->sendMessage(TextFormat::GREEN . "Input Items: " . TextFormat::AQUA . implode(" ", $nameList));
+					/** @var Item $inputItem */
+					foreach($inputItems as $inputItem) {
+						$output[] = (string) $inputItem->getId() . ":" . (string) $inputItem->getDamage() . ":" . (string) $inputItem->getCount();
+					}
+					break;
+				case GuiUtils::TYPE_ENTER_INT:
+					if(!is_numeric($input)) {
+						$output = 0;
+					} else {
+						$output = (int) $input;
+					}
+					$event->getPlayer()->sendMessage(TextFormat::GREEN . "Input Integer: " . TextFormat::AQUA . (string) $output);
+					break;
+				case GuiUtils::TYPE_ENTER_TEXT:
+					$output = (string) $input;
+					$event->getPlayer()->sendMessage(TextFormat::GREEN . "Input Text: " . TextFormat::AQUA . $output);
+					break;
+			}
+			$gui->callBackGuiItem($item, $output);
 			$event->setCancelled();
 		}
 	}
@@ -44,29 +80,34 @@ class GuiListener implements Listener {
 	 */
 	public function onItemHeld(PlayerItemHeldEvent $event) {
 		if($this->getPlugin()->getGuiHandler()->isUsingGui($event->getPlayer())) {
-			switch($event->getItem()->getNamedTag()->bqGuiType->getValue()) {
+			if(!isset($event->getItem()->getNamedTag()->bqGuiInputType)) {
+				return;
+			}
+			switch($event->getItem()->getNamedTag()->bqGuiInputType->getValue()) {
+				default:
 				case GuiUtils::TYPE_CANCEL:
-					$event->getPlayer()->sendMessage(TextFormat::GREEN . "Tap the ground to cancel.");
+					$message = TextFormat::GREEN . "Tap the ground to cancel.";
 					break;
 				case GuiUtils::TYPE_FINALIZE:
-					$event->getPlayer()->sendMessage(TextFormat::GREEN . "Tap the ground to finalize.");
+					$message = TextFormat::GREEN . "Tap the ground to finalize.";
 					break;
 				case GuiUtils::TYPE_NEXT:
-					$event->getPlayer()->sendMessage(TextFormat::GREEN . "Tap the ground to go to the next page.");
+					$message = TextFormat::GREEN . "Tap the ground to go to the next page.";
 					break;
 				case GuiUtils::TYPE_PREVIOUS:
-					$event->getPlayer()->sendMessage(TextFormat::GREEN . "Tap the ground to go to the previous page.");
+					$message = TextFormat::GREEN . "Tap the ground to go to the previous page.";
 					break;
 				case GuiUtils::TYPE_ENTER_ITEMS:
-					$event->getPlayer()->sendMessage(TextFormat::GREEN . "Enter an item in the chat. Can be multiple by separating them with commas.");
+					$message = TextFormat::GREEN . "Enter an item in the chat. Can be multiple by separating them with commas.";
 					break;
 				case GuiUtils::TYPE_ENTER_INT:
-					$event->getPlayer()->sendMessage(TextFormat::GREEN . "Enter a numeric value in the chat.");
+					$message = TextFormat::GREEN . "Enter a numeric value in the chat.";
 					break;
 				case GuiUtils::TYPE_ENTER_TEXT:
-					$event->getPlayer()->sendMessage(TextFormat::GREEN . "Enter a text in the chat.");
+					$message = TextFormat::GREEN . "Enter a text in the chat.";
 					break;
 			}
+			$event->getPlayer()->sendPopup($message);
 		}
 	}
 
@@ -96,9 +137,9 @@ class GuiListener implements Listener {
 	public function onInteract(PlayerInteractEvent $event) {
 		if($this->getPlugin()->getGuiHandler()->isUsingGui($event->getPlayer())) {
 			$gui = $this->getPlugin()->getGuiHandler()->getGui($event->getPlayer());
-			switch($event->getItem()->getNamedTag()->bqGuiType->getValue()) {
+			switch($event->getItem()->getNamedTag()->bqGuiInputType->getValue()) {
 				case GuiUtils::TYPE_CANCEL:
-					$this->getPlugin()->getGuiHandler()->setUsingGui($event->getPlayer(), false, $gui);
+					$this->getPlugin()->getGuiHandler()->setUsingGui($event->getPlayer(), false, $gui, true);
 					break;
 				case GuiUtils::TYPE_FINALIZE:
 					$this->getPlugin()->getGuiHandler()->setUsingGui($event->getPlayer(), false, $gui, false);

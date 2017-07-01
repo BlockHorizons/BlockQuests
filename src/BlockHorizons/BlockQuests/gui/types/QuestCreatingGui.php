@@ -25,21 +25,21 @@ class QuestCreatingGui extends BaseGui {
 				8 => GuiUtils::item(GuiUtils::WHITE, "Next", ["Goes to the next page"], GuiUtils::TYPE_NEXT)
 			],
 			"dynamic" => [
-				[
-					4 => GuiUtils::item(GuiUtils::CYAN, "Quest Name", ["The name the quest will have"], GuiUtils::TYPE_ENTER_TEXT),
-					5 => GuiUtils::item(GuiUtils::ORANGE, "Quest Description", ["The description of the quest"], GuiUtils::TYPE_ENTER_TEXT),
-					6 => GuiUtils::item(GuiUtils::GREEN, "Starting Message", ["The message shown on initial quest start"], GuiUtils::TYPE_ENTER_TEXT),
-					7 => GuiUtils::item(GuiUtils::BLUE, "Started Message", ["The message shown when this quest has already been started"], GuiUtils::TYPE_ENTER_TEXT)
+				 0 => [
+					4 => GuiUtils::item(GuiUtils::CYAN, "Quest Name", ["The name the quest will have"], GuiUtils::TYPE_ENTER_TEXT, GuiUtils::MODE_QUEST_NAME),
+					5 => GuiUtils::item(GuiUtils::ORANGE, "Quest Description", ["The description of the quest"], GuiUtils::TYPE_ENTER_TEXT, GuiUtils::MODE_QUEST_DESCRIPTION),
+					6 => GuiUtils::item(GuiUtils::GREEN, "Starting Message", ["The message shown on initial quest start"], GuiUtils::TYPE_ENTER_TEXT, GuiUtils::MODE_STARTING_MESSAGE),
+					7 => GuiUtils::item(GuiUtils::BLUE, "Started Message", ["The message shown when this quest has already been started"], GuiUtils::TYPE_ENTER_TEXT, GuiUtils::MODE_STARTED_MESSAGE)
 				],
-				[
-					4 => GuiUtils::item(GuiUtils::GREEN, "Finishing Message", ["The message shown when finishing this quest"], GuiUtils::TYPE_ENTER_TEXT),
-					5 => GuiUtils::item(GuiUtils::GREEN, "Finished Message", ["The message shown when this quest has already been finished"], GuiUtils::TYPE_ENTER_TEXT),
-					6 => GuiUtils::item(GuiUtils::YELLOW, "Required Starting Experience", ["The required experience level a player needs to start this quest"], GuiUtils::TYPE_ENTER_INT),
-					7 => GuiUtils::item(GuiUtils::ORANGE, "Required Starting Items", ["The items required to start this quest"], GuiUtils::TYPE_ENTER_ITEMS)
+				1 => [
+					4 => GuiUtils::item(GuiUtils::GREEN, "Finishing Message", ["The message shown when finishing this quest"], GuiUtils::TYPE_ENTER_TEXT, GuiUtils::MODE_FINISHING_MESSAGE),
+					5 => GuiUtils::item(GuiUtils::GREEN, "Finished Message", ["The message shown when this quest has already been finished"], GuiUtils::TYPE_ENTER_TEXT, GuiUtils::MODE_FINISHED_MESSAGE),
+					6 => GuiUtils::item(GuiUtils::YELLOW, "Required Starting Experience", ["The required experience level a player needs to start this quest"], GuiUtils::TYPE_ENTER_INT, GuiUtils::MODE_START_EXPERIENCE_LEVEL),
+					7 => GuiUtils::item(GuiUtils::ORANGE, "Required Starting Items", ["The items required to start this quest"], GuiUtils::TYPE_ENTER_ITEMS, GuiUtils::MODE_START_REQUIRED_ITEMS)
 				],
-				[
-					4 => GuiUtils::item(GuiUtils::PINK, "Required Finishing Items", ["The items required to finish this quest"], GuiUtils::TYPE_ENTER_ITEMS),
-					5 => GuiUtils::item(GuiUtils::LIGHT_BLUE, "Reward Commands", ["The commands executed when finishing this quest"], GuiUtils::TYPE_ENTER_TEXT),
+				2 => [
+					4 => GuiUtils::item(GuiUtils::PINK, "Required Finishing Items", ["The items required to finish this quest"], GuiUtils::TYPE_ENTER_ITEMS, GuiUtils::MODE_FINISH_REQUIRED_ITEMS),
+					5 => GuiUtils::item(GuiUtils::LIGHT_BLUE, "Reward Commands", ["The commands executed when finishing this quest"], GuiUtils::TYPE_ENTER_TEXT, GuiUtils::MODE_REWARD_COMMANDS),
 				]
 			]
 		];
@@ -49,9 +49,6 @@ class QuestCreatingGui extends BaseGui {
 	 * @param bool $cancelled
 	 */
 	public function closeGui(bool $cancelled = true) {
-		parent::closeGui();
-		if(!$cancelled) {
-			// Process data.
-		}
+		parent::closeGui($cancelled);
 	}
 }

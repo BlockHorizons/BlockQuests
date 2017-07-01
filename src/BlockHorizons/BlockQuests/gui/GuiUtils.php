@@ -5,6 +5,7 @@ namespace BlockHorizons\BlockQuests\gui;
 use pocketmine\item\Item;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\IntTag;
+use pocketmine\nbt\tag\StringTag;
 use pocketmine\utils\TextFormat;
 
 class GuiUtils {
@@ -35,15 +36,28 @@ class GuiUtils {
 	const TYPE_ENTER_INT = 2;
 	const TYPE_ENTER_TEXT = 3;
 
+	const MODE_QUEST_NAME = "questName";
+	const MODE_QUEST_DESCRIPTION = "questDescription";
+	const MODE_START_EXPERIENCE_LEVEL = "startExperienceLevel";
+	const MODE_START_REQUIRED_ITEMS = "startRequiredItems";
+	const MODE_REWARD_COMMANDS = "finishRequiredItems";
+	const MODE_FINISH_REQUIRED_ITEMS = "finishRequiredItems";
+
+	const MODE_STARTING_MESSAGE = "startingMessage";
+	const MODE_FINISHING_MESSAGE = "finishingMessage";
+	const MODE_STARTED_MESSAGE = "startedMessage";
+	const MODE_FINISHED_MESSAGE = "finishedMessage";
+
 	/**
 	 * @param int    $id
 	 * @param string $customName
 	 * @param array  $lore
 	 * @param int    $type
+	 * @param string $mode
 	 *
 	 * @return Item
 	 */
-	public static function item(int $id, string $customName, array $lore, int $type): Item {
+	public static function item(int $id, string $customName, array $lore, int $type, string $mode = ""): Item {
 		$item = Item::get(Item::WOOL, $id, 1);
 		if(!empty($customName)) {
 			$item->setCustomName(TextFormat::GREEN . $customName);
@@ -52,7 +66,8 @@ class GuiUtils {
 			$item->setLore($lore);
 		}
 		$nbt = $item->getNamedTag() ?? new CompoundTag("", []);
-		$nbt->bqGuiType = new IntTag("bqGuiType", $type);
+		$nbt->bqGuiInputType = new IntTag("bqGuiInputType", $type);
+		$nbt->bqGuiInputMode = new StringTag("bqGuiInputMode", $mode);
 		$item->setNamedTag($nbt);
 		return $item;
 	}

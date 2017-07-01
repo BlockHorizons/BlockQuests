@@ -6,21 +6,25 @@ use pocketmine\item\Item;
 
 class Quest {
 
+	/** @var string */
+	public $questName = "";
+	/** @var string */
+	public $questDescription = "";
 	/** @var int */
-	private $startExperienceLevel = 0;
+	public $startExperienceLevel = 0;
 	/** @var Item[] */
-	private $startRequiredItems = [];
+	public $startRequiredItems = [];
 	/** @var Item[] */
-	private $finishRequiredItems = [];
+	public $finishRequiredItems = [];
 	/** @var string[] */
-	private $rewardCommands = [];
+	public $rewardCommands = [];
 
 	/** @var string */
-	private $startingMessage = "";
+	public $startingMessage = "";
 	/** @var string */
-	private $finishingMessage = "";
+	public $finishingMessage = "";
 	/** @var string */
-	private $startedMessage = "";
+	public $startedMessage = "";
 
 	/**
 	 * Quest constructor.
@@ -131,5 +135,12 @@ class Quest {
 	 */
 	public function setStartedMessage(string $message) {
 		$this->startedMessasge = $message;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function store(): bool {
+		return true;
 	}
 }
