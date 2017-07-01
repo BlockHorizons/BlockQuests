@@ -79,4 +79,13 @@ class GuiHandler {
 		}
 		return null;
 	}
+
+	/**
+	 * @param Player $player
+	 *
+	 * @return BaseGui|null
+	 */
+	public function getGui(Player $player) {
+		return $this->getGuiById($this->getGuiIdByPlayer($player));
+	}
 }

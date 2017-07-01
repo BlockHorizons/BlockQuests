@@ -14,7 +14,7 @@ class QuestEditingGui extends QuestCreatingGui {
 
 	public function __construct(BlockQuests $plugin, Player $player) {
 		parent::__construct($plugin, $player);
-		$this->defaults[0] = GuiUtils::item(GuiUtils::RED, "Cancel", ["Cancels the editing of this quest"], GuiUtils::TYPE_CANCEL);
-		$this->defaults[1] = GuiUtils::item(GuiUtils::LIME, "Save", ["Saves this quest and finalizes input data"], GuiUtils::TYPE_FINALIZE);
+		$this->defaults["static"][0] = GuiUtils::item(GuiUtils::RED, "Cancel", ["Cancels the editing of this quest"], GuiUtils::TYPE_CANCEL);
+		$this->defaults["static"][1] = GuiUtils::item(GuiUtils::LIME, "Save", ["Saves this quest and finalizes input data"], GuiUtils::TYPE_FINALIZE);
 	}
 }

@@ -22,6 +22,8 @@ abstract class BaseGui {
 	protected $previousContents = [];
 	/** @var Item[] */
 	protected $defaults = [];
+	/** @var int */
+	protected $page = 1;
 
 	public function __construct(BlockQuests $plugin, Player $player) {
 		$this->plugin = $plugin;
@@ -57,9 +59,23 @@ abstract class BaseGui {
 	}
 
 	/**
+	 * @return int
+	 */
+	public function getPage(): int {
+		return $this->page;
+	}
+
+	/**
 	 * @param bool $cancelled
 	 */
 	public abstract function closeGui(bool $cancelled = true);
 
 	public abstract function openGui();
+
+	/**
+	 * @param int $pageNumber
+	 *
+	 * @return bool
+	 */
+	public abstract function goToPage(int $pageNumber): bool;
 }

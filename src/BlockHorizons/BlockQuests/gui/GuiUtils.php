@@ -25,8 +25,10 @@ class GuiUtils {
 	const RED = 14;
 	const BLACK = 15;
 
-	const TYPE_CANCEL = 0;
-	const TYPE_FINALIZE = 10;
+	const TYPE_CANCEL = 10;
+	const TYPE_FINALIZE = 11;
+	const TYPE_NEXT = 12;
+	const TYPE_PREVIOUS = 13;
 
 	const TYPE_ENTER_ITEMS = 1;
 	const TYPE_ENTER_INT = 2;
