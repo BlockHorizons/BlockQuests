@@ -1,4 +1,15 @@
 ---
 # Configuration file for BlockQuests, a quests plugin by BlockHorizons.
 
+# File saving format for quest saving.
+# Available providers:
+# - yaml
+# - json
+Quest-Saving-Dataprovider: yaml
+
+# Player quest data storage database.
+# Available databases:
+# SQLite
+# MySQL
+Player-Quests-Database: SQLite
 ...

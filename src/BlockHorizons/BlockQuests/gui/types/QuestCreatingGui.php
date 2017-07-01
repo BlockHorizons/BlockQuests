@@ -14,8 +14,8 @@ class QuestCreatingGui extends BaseGui {
 	protected $initMessage = TF::GREEN . "Quest creating process started.";
 	protected $finishMessage = TF::GREEN . "Quest creating process has been ended.";
 
-	public function __construct(BlockQuests $plugin, Player $player) {
-		parent::__construct($plugin, $player);
+	public function __construct(BlockQuests $plugin, Player $player, int $questId) {
+		parent::__construct($plugin, $player, $questId);
 		$this->defaults = [
 			"static" => [
 				0 => GuiUtils::item(GuiUtils::RED, "Cancel", ["Cancels the progress of creating this quest"], GuiUtils::TYPE_CANCEL),
@@ -33,7 +33,7 @@ class QuestCreatingGui extends BaseGui {
 				],
 				1 => [
 					4 => GuiUtils::item(GuiUtils::GREEN, "Finishing Message", ["The message shown when finishing this quest"], GuiUtils::TYPE_ENTER_TEXT, GuiUtils::MODE_FINISHING_MESSAGE),
-					5 => GuiUtils::item(GuiUtils::GREEN, "Finished Message", ["The message shown when this quest has already been finished"], GuiUtils::TYPE_ENTER_TEXT, GuiUtils::MODE_FINISHED_MESSAGE),
+					5 => GuiUtils::item(GuiUtils::MAGENTA, "Finished Message", ["The message shown when this quest has already been finished"], GuiUtils::TYPE_ENTER_TEXT, GuiUtils::MODE_FINISHED_MESSAGE),
 					6 => GuiUtils::item(GuiUtils::YELLOW, "Required Starting Experience", ["The required experience level a player needs to start this quest"], GuiUtils::TYPE_ENTER_INT, GuiUtils::MODE_START_EXPERIENCE_LEVEL),
 					7 => GuiUtils::item(GuiUtils::ORANGE, "Required Starting Items", ["The items required to start this quest"], GuiUtils::TYPE_ENTER_ITEMS, GuiUtils::MODE_START_REQUIRED_ITEMS)
 				],
@@ -43,12 +43,5 @@ class QuestCreatingGui extends BaseGui {
 				]
 			]
 		];
-	}
-
-	/**
-	 * @param bool $cancelled
-	 */
-	public function closeGui(bool $cancelled = true) {
-		parent::closeGui($cancelled);
 	}
 }

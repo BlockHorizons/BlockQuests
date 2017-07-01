@@ -27,9 +27,12 @@ abstract class BaseGui {
 	protected $page = 1;
 
 	/** @var Quest */
-	private $quest;
+	protected $quest;
+	/** @var int */
+	private $questId;
 
-	public function __construct(BlockQuests $plugin, Player $player) {
+	public function __construct(BlockQuests $plugin, Player $player, int $questId) {
+		$this->questId = $questId;
 		$this->plugin = $plugin;
 		$this->player = $player;
 	}
@@ -88,7 +91,7 @@ abstract class BaseGui {
 	 * @return bool
 	 */
 	public function goToPage(int $pageNumber): bool {
-		if($pageNumber < 1 || $pageNumber > (count($this->defaults["dynamic"]) + 1)) {
+		if($pageNumber < 1 || $pageNumber > count($this->defaults["dynamic"])) {
 			return false;
 		}
 		for($i = 4; $i < 8; $i++) {
@@ -103,7 +106,7 @@ abstract class BaseGui {
 
 	public function openGui() {
 		$this->sendInitial();
-		$this->player->sendMessage($this->initMessage);
+		$this->player->sendTip($this->initMessage);
 		$this->getPlugin()->getGuiHandler()->setUsingGui($this->player, true, $this);
 	}
 
@@ -116,6 +119,7 @@ abstract class BaseGui {
 		if(!$cancelled && isset($this->quest)) {
 			$this->quest->store();
 		}
+		$this->player->sendTip($this->finishMessage);
 	}
 
 	/**
@@ -126,7 +130,7 @@ abstract class BaseGui {
 	 */
 	public function callBackGuiItem(Item $item, $value): bool {
 		if(!isset($this->quest)) {
-			$this->quest = new Quest();
+			$this->quest = new Quest($this->questId);
 		}
 		if($item->getNamedTag()->bqGuiInputMode->getValue() === "") {
 			return false;

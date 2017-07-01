@@ -23,6 +23,10 @@ class QuestEditParameter extends BaseParameter {
 			$this->sender->sendMessage(TextFormat::RED . "[Error] This command can only be executed as a player.");
 			return true;
 		}
+		if(!$this->sender->hasPermission("blockquests.command.edit")) {
+			$this->sender->sendMessage(TextFormat::RED . "[Error] You do not have permission to use this command.");
+			return true;
+		}
 		if(count($this->args) < 2 || count($this->args) > 2) {
 			$this->sender->sendMessage(TextFormat::RED . "[Usage] /quest edit <ID>");
 			return true;
@@ -31,7 +35,11 @@ class QuestEditParameter extends BaseParameter {
 			$this->sender->sendMessage(TextFormat::RED . "[Error] The quest ID should be numeric.");
 			return true;
 		}
-		$gui = new QuestEditingGui($this->getPlugin(), $this->sender);
+		if($this->getPlugin()->getGuiHandler()->isUsingGui($this->sender)) {
+			$this->sender->sendMessage(TextFormat::RED . "[Error] You are already editing a quest.");
+			return true;
+		}
+		$gui = new QuestEditingGui($this->getPlugin(), $this->sender, (int) $this->args[1]);
 		$gui->openGui();
 		return true;
 	}

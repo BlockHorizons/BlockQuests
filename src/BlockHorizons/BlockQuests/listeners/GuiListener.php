@@ -107,7 +107,7 @@ class GuiListener implements Listener {
 					$message = TextFormat::GREEN . "Enter a text in the chat.";
 					break;
 			}
-			$event->getPlayer()->sendPopup($message);
+			$event->getPlayer()->sendTip($message);
 		}
 	}
 

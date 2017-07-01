@@ -2,10 +2,13 @@
 
 namespace BlockHorizons\BlockQuests\quests;
 
+use BlockHorizons\BlockQuests\quests\storage\YamlQuestStorage;
 use pocketmine\item\Item;
+use pocketmine\Server;
 
 class Quest {
 
+	private $id;
 	/** @var string */
 	public $questName = "";
 	/** @var string */
@@ -25,18 +28,57 @@ class Quest {
 	public $finishingMessage = "";
 	/** @var string */
 	public $startedMessage = "";
+	/** @var string */
+	public $finishedMessage = "";
 
 	/**
 	 * Quest constructor.
 	 *
+	 * @param int   $id
 	 * @param array $data
 	 *
 	 * Should contain an array with any data that should be added. Array keys should be the exact same to the class properties.
 	 */
-	public function __construct(array $data = []) {
+	public function __construct(int $id, array $data = []) {
+		$this->id = $id;
 		foreach($data as $key => $value) {
 			$this->{$key} = $value;
 		}
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getId(): int {
+		return $this->id;
+	}
+
+	/**
+	 * @param string $name
+	 */
+	public function setQuestName(string $name) {
+		$this->questName = $name;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getQuestName(): string {
+		return $this->questName;
+	}
+
+	/**
+	 * @param string $description
+	 */
+	public function setQuestDescription(string $description) {
+		$this->questDescription = $description;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getQuestDescription(): string {
+		return $this->questDescription;
 	}
 
 	/**
@@ -54,7 +96,7 @@ class Quest {
 	}
 
 	/**
-	 * @param Item[] $items
+	 * @param string[] $items
 	 */
 	public function setStartRequiredItems(array $items) {
 		$this->startRequiredItems = $items;
@@ -64,11 +106,15 @@ class Quest {
 	 * @return Item[]
 	 */
 	public function getStartRequiredItems(): array {
-		return $this->startRequiredItems;
+		$items = [];
+		foreach($this->startRequiredItems as $item) {
+			$items[] = Item::fromString($item);
+		}
+		return $items;
 	}
 
 	/**
-	 * @param Item[] $items
+	 * @param string[] $items
 	 */
 	public function setFinishRequiredItems(array $items) {
 		$this->finishRequiredItems = $items;
@@ -78,7 +124,11 @@ class Quest {
 	 * @return Item[]
 	 */
 	public function getFinishRequiredItems(): array {
-		return $this->finishRequiredItems;
+		$items = [];
+		foreach($this->finishRequiredItems as $item) {
+			$items[] = Item::fromString($item);
+		}
+		return $items;
 	}
 
 	/**
@@ -138,9 +188,35 @@ class Quest {
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getFinishedMessage(): string {
+		return $this->finishedMessage;
+	}
+
+	/**
+	 * @param string $message
+	 */
+	public function setFinishedMessage(string $message) {
+		$this->finishedMessage = $message;
+	}
+
+	/**
 	 * @return bool
 	 */
 	public function store(): bool {
+		YamlQuestStorage::store($this);
 		return true;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getDataArray(): array {
+		$data = [];
+		foreach($this as $key => $value) {
+			$data[$key] = $value;
+		}
+		return $data;
 	}
 }
