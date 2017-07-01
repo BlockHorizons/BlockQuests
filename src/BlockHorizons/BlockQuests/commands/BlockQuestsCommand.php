@@ -13,7 +13,6 @@ abstract class BlockQuestsCommand extends Command implements PluginIdentifiableC
 
 	public function __construct(BlockQuests $plugin, $name, $description = "", $usageMessage = null, $aliases = []) {
 		parent::__construct($name, $description, $usageMessage, $aliases);
-		$this->setPermission("blockquests.command." . $name);
 		$this->plugin = $plugin;
 	}
 
