@@ -44,7 +44,7 @@ class GuiListener implements Listener {
 	 */
 	public function onItemHeld(PlayerItemHeldEvent $event) {
 		if($this->getPlugin()->getGuiHandler()->isUsingGui($event->getPlayer())) {
-			switch($event->getItem()->getNamedTag()->bqGuiType) {
+			switch($event->getItem()->getNamedTag()->bqGuiType->getValue()) {
 				case GuiUtils::TYPE_CANCEL:
 					$event->getPlayer()->sendMessage(TextFormat::GREEN . "Tap the ground to cancel.");
 					break;
@@ -96,7 +96,7 @@ class GuiListener implements Listener {
 	public function onInteract(PlayerInteractEvent $event) {
 		if($this->getPlugin()->getGuiHandler()->isUsingGui($event->getPlayer())) {
 			$gui = $this->getPlugin()->getGuiHandler()->getGui($event->getPlayer());
-			switch($event->getItem()->getNamedTag()->bqGuiType) {
+			switch($event->getItem()->getNamedTag()->bqGuiType->getValue()) {
 				case GuiUtils::TYPE_CANCEL:
 					$this->getPlugin()->getGuiHandler()->setUsingGui($event->getPlayer(), false, $gui);
 					break;

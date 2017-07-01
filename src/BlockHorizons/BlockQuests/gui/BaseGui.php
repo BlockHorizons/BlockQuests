@@ -65,17 +65,46 @@ abstract class BaseGui {
 		return $this->page;
 	}
 
-	/**
-	 * @param bool $cancelled
-	 */
-	public abstract function closeGui(bool $cancelled = true);
-
-	public abstract function openGui();
+	protected function send() {
+		$this->previousContents = $this->player->getInventory()->getContents();
+		for($i = 0; $i < $this->player->getInventory()->gethotBarSize(); $i++) {
+			$this->player->getInventory()->clear($i);
+		}
+		foreach($this->defaults["static"] as $slot => $item) {
+			$this->player->getInventory()->setItem($slot, $item);
+		}
+		foreach($this->defaults["dynamic"][0] as $slot => $item) {
+			$this->player->getInventory()->setItem($slot, $item);
+		}
+	}
 
 	/**
 	 * @param int $pageNumber
 	 *
 	 * @return bool
 	 */
-	public abstract function goToPage(int $pageNumber): bool;
+	public function goToPage(int $pageNumber): bool {
+		if($pageNumber < 1 || $pageNumber > count($this->defaults["dynamic"])) {
+			return false;
+		}
+		for($i = 4; $i < 8; $i++) {
+			$this->player->getInventory()->clear($i);
+		}
+		foreach($this->defaults["dynamic"][$pageNumber - 1] as $slot => $item) {
+			$this->player->getInventory()->setItem($slot, $item);
+		}
+		$this->page = $pageNumber;
+		return true;
+	}
+
+	public function openGui() {
+		$this->send();
+		$this->player->sendMessage($this->initMessage);
+		$this->getPlugin()->getGuiHandler()->setUsingGui($this->player, true, $this);
+	}
+
+	public function closeGui() {
+		$this->player->getInventory()->setContents($this->previousContents);
+		$this->getPlugin()->getGuiHandler()->setUsingGui($this->player, false, $this);
+	}
 }
