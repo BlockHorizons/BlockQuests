@@ -73,23 +73,14 @@ abstract class BaseGui {
 		return $this->page;
 	}
 
-	/**
-	 * @param bool $save
-	 * @param int  $page
-	 */
-	protected function send($save = false, $page = 1) {
-		if($save) {
-			$this->previousContents = $this->player->getInventory()->getContents();
-		}
+	protected function sendInitial() {
+		$this->previousContents = $this->player->getInventory()->getContents();
 		$this->player->getInventory()->resetHotbar();
 
 		foreach($this->defaults["static"] as $slot => $item) {
 			$this->player->getInventory()->setItem($slot, $item);
 		}
-		foreach($this->defaults["dynamic"][$page - 1] as $slot => $item) {
-			if($page !== 1) {
-				var_dump($slot);
-			}
+		foreach($this->defaults["dynamic"][0] as $slot => $item) {
 			$this->player->getInventory()->setItem($slot, $item);
 		}
 	}
@@ -103,14 +94,18 @@ abstract class BaseGui {
 		if($pageNumber < 1 || $pageNumber > count($this->defaults["dynamic"])) {
 			return false;
 		}
-		$this->send(false, $pageNumber);
+		$this->getPlugin()->getGuiHandler()->allowInventoryChange = true;
+		foreach($this->defaults["dynamic"][$pageNumber - 1] as $slot => $item) {
+			$this->player->getInventory()->setItem($slot, $item);
+		}
+		$this->getPlugin()->getGuiHandler()->allowInventoryChange = false;
 		$this->page = $pageNumber;
 		$this->player->sendTip(TextFormat::GREEN . TextFormat::BOLD . "[" . $pageNumber . "/" . count($this->defaults["dynamic"]) . "]");
 		return true;
 	}
 
 	public function openGui() {
-		$this->send(true);
+		$this->sendInitial();
 		$this->player->sendTip($this->initMessage);
 		$this->getPlugin()->getGuiHandler()->setUsingGui($this->player, true, $this);
 	}

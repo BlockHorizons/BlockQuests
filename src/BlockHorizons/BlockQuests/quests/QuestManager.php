@@ -40,7 +40,8 @@ class QuestManager {
 			if($quest === "." || $quest === "..") {
 				continue;
 			}
-			if(!is_file($path) || !is_numeric($quest)) {
+			$questId = explode(".", $quest)[0];
+			if(!is_file($path) || !is_numeric($questId)) {
 				continue;
 			}
 			$data = yaml_parse_file($path);
@@ -48,7 +49,7 @@ class QuestManager {
 				$this->plugin->getLogger()->debug("Invalid quest content file \'" . $quest . "\' found. Skipping...");
 				continue;
 			}
-			$quests[] = $this->getQuestById((int) $quest);
+			$quests[] = $this->getQuestById((int) $questId);
 		}
 		return $quests;
 	}

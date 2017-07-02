@@ -12,6 +12,8 @@ class GuiHandler {
 	private $usingGui = [];
 	/** @var BaseGui */
 	private $gui = [];
+	/** @var bool */
+	public $allowInventoryChange = false;
 
 	public function __construct(BlockQuests $plugin) {
 		$this->plugin = $plugin;

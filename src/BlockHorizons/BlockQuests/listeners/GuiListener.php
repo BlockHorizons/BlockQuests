@@ -117,8 +117,12 @@ class GuiListener implements Listener {
 	 * @param EntityInventoryChangeEvent $event
 	 */
 	public function onInventoryChange(EntityInventoryChangeEvent $event) {
-		if($event->getEntity() instanceof Player) {
-			if($this->getPlugin()->getGuiHandler()->isUsingGui($event->getEntity())) {
+		$player = $event->getEntity();
+		if($player instanceof Player) {
+			if($this->getPlugin()->getGuiHandler()->isUsingGui($player)) {
+				if($this->getPlugin()->getGuiHandler()->allowInventoryChange) {
+					return;
+				}
 				$event->setCancelled();
 			}
 		}
