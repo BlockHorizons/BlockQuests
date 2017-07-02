@@ -74,16 +74,22 @@ abstract class BaseGui {
 	}
 
 	/**
-	 * @param int $page
+	 * @param bool $save
+	 * @param int  $page
 	 */
-	protected function send($page = 1) {
-		$this->previousContents = $this->player->getInventory()->getContents();
+	protected function send($save = false, $page = 1) {
+		if($save) {
+			$this->previousContents = $this->player->getInventory()->getContents();
+		}
 		$this->player->getInventory()->resetHotbar();
 
 		foreach($this->defaults["static"] as $slot => $item) {
 			$this->player->getInventory()->setItem($slot, $item);
 		}
 		foreach($this->defaults["dynamic"][$page - 1] as $slot => $item) {
+			if($page !== 1) {
+				var_dump($slot);
+			}
 			$this->player->getInventory()->setItem($slot, $item);
 		}
 	}
@@ -97,14 +103,14 @@ abstract class BaseGui {
 		if($pageNumber < 1 || $pageNumber > count($this->defaults["dynamic"])) {
 			return false;
 		}
-		$this->send($pageNumber);
+		$this->send(false, $pageNumber);
 		$this->page = $pageNumber;
 		$this->player->sendTip(TextFormat::GREEN . TextFormat::BOLD . "[" . $pageNumber . "/" . count($this->defaults["dynamic"]) . "]");
 		return true;
 	}
 
 	public function openGui() {
-		$this->send();
+		$this->send(true);
 		$this->player->sendTip($this->initMessage);
 		$this->getPlugin()->getGuiHandler()->setUsingGui($this->player, true, $this);
 	}

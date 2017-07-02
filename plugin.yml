@@ -22,4 +22,10 @@ permissions:
           blockquests.command.edit:
             default: op
             description: "Allows access to editing a quest."
+          blockquests.command.delete:
+            default: op
+            description: "Allows access to deleting an existing quest."
+          blockquests.command.start:
+            default: true
+            description: "Allows access to starting an existing quest."
 ...
