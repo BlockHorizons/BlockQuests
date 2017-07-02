@@ -39,36 +39,38 @@ class GuiListener implements Listener {
 			$gui = $this->getPlugin()->getGuiHandler()->getGui($event->getPlayer());
 			$item = $event->getPlayer()->getInventory()->getItemInHand();
 			$input = $event->getMessage();
-			switch($item->getNamedTag()->bqGuiInputType->getValue()) {
-				case GuiUtils::TYPE_ENTER_ITEMS:
-					$nameList = [];
-					$inputItems = explode(",", $input);
-					foreach($inputItems as &$inputItem) {
-						if(is_numeric($inputItem)) {
-							$inputItem = Item::get((int) $inputItem);
-						} else {
-							$inputItem = Item::fromString($inputItem);
+			if(isset($item->getNamedTag()->bqGuiInputType)) {
+				switch($item->getNamedTag()->bqGuiInputType->getValue()) {
+					case GuiUtils::TYPE_ENTER_ITEMS:
+						$nameList = [];
+						$inputItems = explode(",", $input);
+						foreach($inputItems as &$inputItem) {
+							if(is_numeric($inputItem)) {
+								$inputItem = Item::get((int) $inputItem);
+							} else {
+								$inputItem = Item::fromString($inputItem);
+							}
+							$nameList[] = $inputItem->getName();
 						}
-						$nameList[] = $inputItem->getName();
-					}
-					$event->getPlayer()->sendMessage(TextFormat::GREEN . "Input Items: " . TextFormat::AQUA . implode(" ", $nameList));
-					/** @var Item $inputItem */
-					foreach($inputItems as $inputItem) {
-						$output[] = (string) $inputItem->getId() . ":" . (string) $inputItem->getDamage() . ":" . (string) $inputItem->getCount();
-					}
-					break;
-				case GuiUtils::TYPE_ENTER_INT:
-					if(!is_numeric($input)) {
-						$output = 0;
-					} else {
-						$output = (int) $input;
-					}
-					$event->getPlayer()->sendMessage(TextFormat::GREEN . "Input Integer: " . TextFormat::AQUA . (string) $output);
-					break;
-				case GuiUtils::TYPE_ENTER_TEXT:
-					$output = (string) $input;
-					$event->getPlayer()->sendMessage(TextFormat::GREEN . "Input Text: " . TextFormat::AQUA . $output);
-					break;
+						$event->getPlayer()->sendMessage(TextFormat::GREEN . "Input Items: " . TextFormat::AQUA . implode(" ", $nameList));
+						/** @var Item $inputItem */
+						foreach($inputItems as $inputItem) {
+							$output[] = (string) $inputItem->getId() . ":" . (string) $inputItem->getDamage() . ":" . (string) $inputItem->getCount();
+						}
+						break;
+					case GuiUtils::TYPE_ENTER_INT:
+						if(!is_numeric($input)) {
+							$output = 0;
+						} else {
+							$output = (int) $input;
+						}
+						$event->getPlayer()->sendMessage(TextFormat::GREEN . "Input Integer: " . TextFormat::AQUA . (string) $output);
+						break;
+					case GuiUtils::TYPE_ENTER_TEXT:
+						$output = (string) $input;
+						$event->getPlayer()->sendMessage(TextFormat::GREEN . "Input Text: " . TextFormat::AQUA . $output);
+						break;
+				}
 			}
 			$gui->callBackGuiItem($item, $output);
 			$event->setCancelled();
@@ -145,12 +147,13 @@ class GuiListener implements Listener {
 					$this->getPlugin()->getGuiHandler()->setUsingGui($event->getPlayer(), false, $gui, false);
 					break;
 				case GuiUtils::TYPE_NEXT:
-					$gui->goToPage($gui->getPage() + 1);
+					$this->getPlugin()->getGuiHandler()->getGui($event->getPlayer())->goToPage($gui->getPage() + 1);
 					break;
 				case GuiUtils::TYPE_PREVIOUS:
-					$gui->goToPage($gui->getPage() - 1);
+					$this->getPlugin()->getGuiHandler()->getGui($event->getPlayer())->goToPage($gui->getPage() - 1);
 					break;
 			}
+			$event->setCancelled();
 		}
 	}
 }

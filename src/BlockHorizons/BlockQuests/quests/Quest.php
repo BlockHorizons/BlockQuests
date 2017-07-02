@@ -4,7 +4,6 @@ namespace BlockHorizons\BlockQuests\quests;
 
 use BlockHorizons\BlockQuests\quests\storage\YamlQuestStorage;
 use pocketmine\item\Item;
-use pocketmine\Server;
 
 class Quest {
 
@@ -15,9 +14,9 @@ class Quest {
 	public $questDescription = "";
 	/** @var int */
 	public $startExperienceLevel = 0;
-	/** @var Item[] */
+	/** @var string[] */
 	public $startRequiredItems = [];
-	/** @var Item[] */
+	/** @var string[] */
 	public $finishRequiredItems = [];
 	/** @var string[] */
 	public $rewardCommands = [];
@@ -212,7 +211,7 @@ class Quest {
 	/**
 	 * @return array
 	 */
-	public function getDataArray(): array {
+	public function parse(): array {
 		$data = [];
 		foreach($this as $key => $value) {
 			$data[$key] = $value;

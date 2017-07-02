@@ -18,8 +18,6 @@ abstract class BaseParameter {
 		$this->sender = $sender;
 		$this->args = $args;
 		$this->plugin = $plugin;
-
-		$this->perform();
 	}
 
 	/**

@@ -12,7 +12,8 @@ class YamlQuestStorage {
 	 */
 	public static function store(Quest $quest) {
 		$folder = Server::getInstance()->getPluginManager()->getPlugin("BlockQuests")->getDataFolder();
-		yaml_emit_file($folder . "quests/" . $quest->getId(), $quest->getDataArray());
+		file_put_contents($folder . "quests/" . $quest->getId(), "");
+		yaml_emit_file($folder . "quests/" . $quest->getId(), $quest->parse());
 	}
 
 	/**
