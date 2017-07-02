@@ -7,13 +7,12 @@ use pocketmine\Player;
 
 class GuiHandler {
 
+	/** @var bool */
+	public $allowInventoryChange = false;
 	private $plugin;
-
 	private $usingGui = [];
 	/** @var BaseGui */
 	private $gui = [];
-	/** @var bool */
-	public $allowInventoryChange = false;
 
 	public function __construct(BlockQuests $plugin) {
 		$this->plugin = $plugin;
@@ -49,24 +48,6 @@ class GuiHandler {
 	/**
 	 * @param Player $player
 	 *
-	 * @return bool
-	 */
-	public function isUsingGui(Player $player): bool {
-		return isset($this->usingGui[$player->getId()]) && $this->usingGui[$player->getId()] === true;
-	}
-
-	/**
-	 * @param int $id
-	 *
-	 * @return BaseGui|null
-	 */
-	public function getGuiById(int $id) {
-		return isset($this->gui[$id]) ? $this->gui[$id] : null;
-	}
-
-	/**
-	 * @param Player $player
-	 *
 	 * @return int
 	 */
 	public function getGuiIdByPlayer(Player $player) {
@@ -85,9 +66,27 @@ class GuiHandler {
 	/**
 	 * @param Player $player
 	 *
+	 * @return bool
+	 */
+	public function isUsingGui(Player $player): bool {
+		return isset($this->usingGui[$player->getId()]) && $this->usingGui[$player->getId()] === true;
+	}
+
+	/**
+	 * @param Player $player
+	 *
 	 * @return BaseGui|null
 	 */
 	public function getGui(Player $player) {
 		return $this->getGuiById($this->getGuiIdByPlayer($player));
+	}
+
+	/**
+	 * @param int $id
+	 *
+	 * @return BaseGui|null
+	 */
+	public function getGuiById(int $id) {
+		return isset($this->gui[$id]) ? $this->gui[$id] : null;
 	}
 }

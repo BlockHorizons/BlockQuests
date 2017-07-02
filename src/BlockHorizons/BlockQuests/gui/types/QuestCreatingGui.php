@@ -25,7 +25,7 @@ class QuestCreatingGui extends BaseGui {
 				8 => GuiUtils::item(GuiUtils::WHITE, "Next", ["Goes to the next page"], GuiUtils::TYPE_NEXT)
 			],
 			"dynamic" => [
-				 0 => [
+				0 => [
 					4 => GuiUtils::item(GuiUtils::CYAN, "Quest Name", ["The name the quest will have"], GuiUtils::TYPE_ENTER_TEXT, GuiUtils::MODE_QUEST_NAME),
 					5 => GuiUtils::item(GuiUtils::ORANGE, "Quest Description", ["The description of the quest"], GuiUtils::TYPE_ENTER_TEXT, GuiUtils::MODE_QUEST_DESCRIPTION),
 					6 => GuiUtils::item(GuiUtils::GREEN, "Starting Message", ["The message shown on initial quest start"], GuiUtils::TYPE_ENTER_TEXT, GuiUtils::MODE_STARTING_MESSAGE),
@@ -39,7 +39,9 @@ class QuestCreatingGui extends BaseGui {
 				],
 				2 => [
 					4 => GuiUtils::item(GuiUtils::PINK, "Required Finishing Items", ["The items required to finish this quest"], GuiUtils::TYPE_ENTER_ITEMS, GuiUtils::MODE_FINISH_REQUIRED_ITEMS),
-					5 => GuiUtils::item(GuiUtils::LIGHT_BLUE, "Reward Commands", ["The commands executed when finishing this quest"], GuiUtils::TYPE_ENTER_TEXT, GuiUtils::MODE_REWARD_COMMANDS),
+					5 => GuiUtils::item(GuiUtils::LIGHT_BLUE, "Reward Commands", ["The commands executed when finishing this quest"], GuiUtils::TYPE_ENTER_COMMANDS, GuiUtils::MODE_REWARD_COMMANDS),
+					6 => Item::get(Item::AIR),
+					7 => Item::get(Item::AIR)
 				]
 			]
 		];

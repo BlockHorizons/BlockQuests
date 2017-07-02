@@ -24,6 +24,13 @@ class BlockQuestsConfig {
 	}
 
 	/**
+	 * @return BlockQuests
+	 */
+	public function getPlugin(): BlockQuests {
+		return $this->plugin;
+	}
+
+	/**
 	 * @return string
 	 */
 	public function getQuestDataStorage(): string {
@@ -35,12 +42,5 @@ class BlockQuestsConfig {
 	 */
 	public function getPlayerDataStorage(): string {
 		return $this->settings["Player-Quests-Database"] ?? "sqlite";
-	}
-
-	/**
-	 * @return BlockQuests
-	 */
-	public function getPlugin(): BlockQuests {
-		return $this->plugin;
 	}
 }

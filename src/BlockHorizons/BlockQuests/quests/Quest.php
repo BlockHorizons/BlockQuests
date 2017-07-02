@@ -3,14 +3,11 @@
 namespace BlockHorizons\BlockQuests\quests;
 
 use BlockHorizons\BlockQuests\BlockQuests;
-use BlockHorizons\BlockQuests\quests\storage\YamlQuestStorage;
-use pocketmine\block\Block;
 use pocketmine\item\Item;
 use pocketmine\Server;
 
 class Quest {
 
-	private $id;
 	/** @var string */
 	public $questName = "";
 	/** @var string */
@@ -23,7 +20,6 @@ class Quest {
 	public $finishRequiredItems = [];
 	/** @var string[] */
 	public $rewardCommands = [];
-
 	/** @var string */
 	public $startingMessage = "";
 	/** @var string */
@@ -32,6 +28,7 @@ class Quest {
 	public $startedMessage = "";
 	/** @var string */
 	public $finishedMessage = "";
+	private $id;
 
 	/**
 	 * Quest constructor.
@@ -56,13 +53,6 @@ class Quest {
 	}
 
 	/**
-	 * @param string $name
-	 */
-	public function setQuestName(string $name) {
-		$this->questName = $name;
-	}
-
-	/**
 	 * @return string
 	 */
 	public function getQuestName(): string {
@@ -70,10 +60,10 @@ class Quest {
 	}
 
 	/**
-	 * @param string $description
+	 * @param string $name
 	 */
-	public function setQuestDescription(string $description) {
-		$this->questDescription = $description;
+	public function setQuestName(string $name) {
+		$this->questName = $name;
 	}
 
 	/**
@@ -84,10 +74,10 @@ class Quest {
 	}
 
 	/**
-	 * @param int $level
+	 * @param string $description
 	 */
-	public function setStartExperienceLevel(int $level) {
-		$this->startExperienceLevel = $level;
+	public function setQuestDescription(string $description) {
+		$this->questDescription = $description;
 	}
 
 	/**
@@ -98,10 +88,10 @@ class Quest {
 	}
 
 	/**
-	 * @param string[] $items
+	 * @param int $level
 	 */
-	public function setStartRequiredItems(array $items) {
-		$this->startRequiredItems = $items;
+	public function setStartExperienceLevel(int $level) {
+		$this->startExperienceLevel = $level;
 	}
 
 	/**
@@ -118,8 +108,8 @@ class Quest {
 	/**
 	 * @param string[] $items
 	 */
-	public function setFinishRequiredItems(array $items) {
-		$this->finishRequiredItems = $items;
+	public function setStartRequiredItems(array $items) {
+		$this->startRequiredItems = $items;
 	}
 
 	/**
@@ -134,10 +124,10 @@ class Quest {
 	}
 
 	/**
-	 * @param string[] $commands
+	 * @param string[] $items
 	 */
-	public function setRewardCommands(array $commands) {
-		$this->rewardCommands = $commands;
+	public function setFinishRequiredItems(array $items) {
+		$this->finishRequiredItems = $items;
 	}
 
 	/**
@@ -145,6 +135,13 @@ class Quest {
 	 */
 	public function getRewardCommands(): array {
 		return $this->rewardCommands;
+	}
+
+	/**
+	 * @param string[] $commands
+	 */
+	public function setRewardCommands(array $commands) {
+		$this->rewardCommands = $commands;
 	}
 
 	/**
@@ -158,7 +155,7 @@ class Quest {
 	 * @param string $message
 	 */
 	public function setStartingMessage(string $message) {
-		$this->startingMessasge = $message;
+		$this->startingMessage = $message;
 	}
 
 	/**
@@ -186,7 +183,7 @@ class Quest {
 	 * @param string $message
 	 */
 	public function setStartedMessage(string $message) {
-		$this->startedMessasge = $message;
+		$this->startedMessage = $message;
 	}
 
 	/**

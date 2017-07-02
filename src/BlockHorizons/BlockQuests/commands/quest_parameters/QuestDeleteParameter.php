@@ -4,7 +4,6 @@ namespace BlockHorizons\BlockQuests\commands\quest_parameters;
 
 use BlockHorizons\BlockQuests\BlockQuests;
 use pocketmine\command\CommandSender;
-use pocketmine\Player;
 use pocketmine\utils\TextFormat;
 
 class QuestDeleteParameter extends BaseParameter {

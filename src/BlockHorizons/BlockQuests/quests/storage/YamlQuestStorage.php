@@ -3,7 +3,6 @@
 namespace BlockHorizons\BlockQuests\quests\storage;
 
 use BlockHorizons\BlockQuests\quests\Quest;
-use pocketmine\Server;
 
 class YamlQuestStorage extends QuestStorage {
 
@@ -25,6 +24,18 @@ class YamlQuestStorage extends QuestStorage {
 	/**
 	 * @param int $questId
 	 *
+	 * @return bool
+	 */
+	public function exists(int $questId): bool {
+		if(file_exists($this->getPlugin()->getDataFolder() . "quests/" . (string) $questId . ".yml")) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @param int $questId
+	 *
 	 * @return Quest
 	 */
 	public function fetch(int $questId): Quest {
@@ -34,18 +45,6 @@ class YamlQuestStorage extends QuestStorage {
 		$folder = $this->getPlugin()->getDataFolder();
 		$data = yaml_parse_file($folder . "quests/" . (string) $questId . ".yml");
 		return new Quest($questId, $data);
-	}
-
-	/**
-	 * @param int $questId
-	 *
-	 * @return bool
-	 */
-	public function exists(int $questId): bool {
-		if(file_exists($this->getPlugin()->getDataFolder() . "quests/" . (string) $questId . ".yml")) {
-			return true;
-		}
-		return false;
 	}
 
 	/**

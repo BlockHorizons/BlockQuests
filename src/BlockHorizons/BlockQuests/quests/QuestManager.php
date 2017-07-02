@@ -22,15 +22,6 @@ class QuestManager {
 	}
 
 	/**
-	 * @param int $id
-	 *
-	 * @return Quest
-	 */
-	public function getQuestById(int $id): Quest {
-		return $this->plugin->getQuestStorage()->fetch($id);
-	}
-
-	/**
 	 * @return Quest[]
 	 */
 	public function getQuestList(): array {
@@ -52,5 +43,14 @@ class QuestManager {
 			$quests[] = $this->getQuestById((int) $questId);
 		}
 		return $quests;
+	}
+
+	/**
+	 * @param int $id
+	 *
+	 * @return Quest
+	 */
+	public function getQuestById(int $id): Quest {
+		return $this->plugin->getQuestStorage()->fetch($id);
 	}
 }

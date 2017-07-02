@@ -4,7 +4,6 @@ namespace BlockHorizons\BlockQuests\quests\storage;
 
 use BlockHorizons\BlockQuests\BlockQuests;
 use BlockHorizons\BlockQuests\quests\Quest;
-use pocketmine\block\Block;
 
 abstract class QuestStorage {
 

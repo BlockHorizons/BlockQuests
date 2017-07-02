@@ -35,6 +35,7 @@ class GuiUtils {
 	const TYPE_ENTER_ITEMS = 1;
 	const TYPE_ENTER_INT = 2;
 	const TYPE_ENTER_TEXT = 3;
+	const TYPE_ENTER_COMMANDS = 4;
 
 	const MODE_QUEST_NAME = "questName";
 	const MODE_QUEST_DESCRIPTION = "questDescription";

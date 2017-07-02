@@ -39,13 +39,6 @@ abstract class BaseGui {
 	}
 
 	/**
-	 * @return BlockQuests
-	 */
-	public function getPlugin(): BlockQuests {
-		return $this->plugin;
-	}
-
-	/**
 	 * @return string
 	 */
 	public function getInitializeMessage(): string {
@@ -73,18 +66,6 @@ abstract class BaseGui {
 		return $this->page;
 	}
 
-	protected function sendInitial() {
-		$this->previousContents = $this->player->getInventory()->getContents();
-		$this->player->getInventory()->resetHotbar();
-
-		foreach($this->defaults["static"] as $slot => $item) {
-			$this->player->getInventory()->setItem($slot, $item);
-		}
-		foreach($this->defaults["dynamic"][0] as $slot => $item) {
-			$this->player->getInventory()->setItem($slot, $item);
-		}
-	}
-
 	/**
 	 * @param int $pageNumber
 	 *
@@ -104,10 +85,29 @@ abstract class BaseGui {
 		return true;
 	}
 
+	/**
+	 * @return BlockQuests
+	 */
+	public function getPlugin(): BlockQuests {
+		return $this->plugin;
+	}
+
 	public function openGui() {
 		$this->sendInitial();
 		$this->player->sendTip($this->initMessage);
 		$this->getPlugin()->getGuiHandler()->setUsingGui($this->player, true, $this);
+	}
+
+	protected function sendInitial() {
+		$this->previousContents = $this->player->getInventory()->getContents();
+		$this->player->getInventory()->resetHotbar();
+
+		foreach($this->defaults["static"] as $slot => $item) {
+			$this->player->getInventory()->setItem($slot, $item);
+		}
+		foreach($this->defaults["dynamic"][0] as $slot => $item) {
+			$this->player->getInventory()->setItem($slot, $item);
+		}
 	}
 
 	/**

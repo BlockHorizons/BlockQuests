@@ -54,20 +54,6 @@ class BlockQuests extends PluginBase {
 	}
 
 	/**
-	 * @return BlockQuestsConfig
-	 */
-	public function getBlockQuestsConfig(): BlockQuestsConfig {
-		return $this->bqConfig;
-	}
-
-	/**
-	 * @return GuiHandler
-	 */
-	public function getGuiHandler(): GuiHandler {
-		return $this->guiHandler;
-	}
-
-	/**
 	 * @return QuestStorage
 	 */
 	public function initializeStorage(): QuestStorage {
@@ -82,6 +68,20 @@ class BlockQuests extends PluginBase {
 				break;
 		}
 		return $this->questStorage;
+	}
+
+	/**
+	 * @return BlockQuestsConfig
+	 */
+	public function getBlockQuestsConfig(): BlockQuestsConfig {
+		return $this->bqConfig;
+	}
+
+	/**
+	 * @return GuiHandler
+	 */
+	public function getGuiHandler(): GuiHandler {
+		return $this->guiHandler;
 	}
 
 	/**

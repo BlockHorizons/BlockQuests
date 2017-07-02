@@ -5,7 +5,6 @@ namespace BlockHorizons\BlockQuests\database;
 use BlockHorizons\BlockQuests\BlockQuests;
 use BlockHorizons\BlockQuests\quests\Quest;
 use pocketmine\IPlayer;
-use pocketmine\OfflinePlayer;
 
 abstract class BaseDatabase {
 
@@ -36,13 +35,6 @@ abstract class BaseDatabase {
 	/**
 	 * @param IPlayer $player
 	 *
-	 * @return array
-	 */
-	public abstract function getPlayerData(IPlayer $player): array;
-
-	/**
-	 * @param IPlayer $player
-	 *
 	 * @return Quest[]
 	 */
 	public function getFinishedQuests(IPlayer $player): array {
@@ -52,6 +44,13 @@ abstract class BaseDatabase {
 		}
 		return $quests;
 	}
+
+	/**
+	 * @param IPlayer $player
+	 *
+	 * @return array
+	 */
+	public abstract function getPlayerData(IPlayer $player): array;
 
 	/**
 	 * @param IPlayer $player

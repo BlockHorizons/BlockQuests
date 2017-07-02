@@ -4,7 +4,6 @@ namespace BlockHorizons\BlockQuests\listeners;
 
 use BlockHorizons\BlockQuests\BlockQuests;
 use BlockHorizons\BlockQuests\gui\GuiUtils;
-use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\entity\EntityInventoryChangeEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;
@@ -21,13 +20,6 @@ class GuiListener implements Listener {
 
 	public function __construct(BlockQuests $plugin) {
 		$this->plugin = $plugin;
-	}
-
-	/**
-	 * @return BlockQuests
-	 */
-	public function getPlugin(): BlockQuests {
-		return $this->plugin;
 	}
 
 	/**
@@ -52,7 +44,7 @@ class GuiListener implements Listener {
 							}
 							$nameList[] = $inputItem->getName();
 						}
-						$event->getPlayer()->sendMessage(TextFormat::GREEN . "Input Items: " . TextFormat::AQUA . implode(" ", $nameList));
+						$event->getPlayer()->sendMessage(TextFormat::GREEN . "Input Items: " . TextFormat::AQUA . implode(", ", $nameList));
 						/** @var Item $inputItem */
 						foreach($inputItems as $inputItem) {
 							$output[] = (string) $inputItem->getId() . ":" . (string) $inputItem->getDamage() . ":" . (string) $inputItem->getCount();
@@ -70,11 +62,25 @@ class GuiListener implements Listener {
 						$output = (string) $input;
 						$event->getPlayer()->sendMessage(TextFormat::GREEN . "Input Text: " . TextFormat::AQUA . $output);
 						break;
+					case GuiUtils::TYPE_ENTER_COMMANDS:
+						$inputCommands = explode(",", $input);
+						$event->getPlayer()->sendMessage(TextFormat::GREEN . "Input Commands: " . TextFormat::AQUA . "/" . implode(", /", $inputCommands));
+						foreach($inputCommands as $inputCommand) {
+							$output[] = $inputCommand;
+						}
+						break;
 				}
 			}
 			$gui->callBackGuiItem($item, $output);
 			$event->setCancelled();
 		}
+	}
+
+	/**
+	 * @return BlockQuests
+	 */
+	public function getPlugin(): BlockQuests {
+		return $this->plugin;
 	}
 
 	/**
@@ -100,13 +106,16 @@ class GuiListener implements Listener {
 					$message = TextFormat::GREEN . "Tap the ground to go to the previous page.";
 					break;
 				case GuiUtils::TYPE_ENTER_ITEMS:
-					$message = TextFormat::GREEN . "Enter an item in the chat. Can be multiple by separating them with commas.";
+					$message = TextFormat::GREEN . "Enter an item in the chat. Separate multiple with commas.";
 					break;
 				case GuiUtils::TYPE_ENTER_INT:
 					$message = TextFormat::GREEN . "Enter a numeric value in the chat.";
 					break;
 				case GuiUtils::TYPE_ENTER_TEXT:
 					$message = TextFormat::GREEN . "Enter a text in the chat.";
+					break;
+				case GuiUtils::TYPE_ENTER_COMMANDS:
+					$message = TextFormat::GREEN . "Enter a command in the chat without slash. Separate multiple with commas.";
 					break;
 			}
 			$event->getPlayer()->sendTip($message);
