@@ -6,6 +6,7 @@ use BlockHorizons\BlockQuests\BlockQuests;
 use BlockHorizons\BlockQuests\quests\Quest;
 use pocketmine\item\Item;
 use pocketmine\Player;
+use pocketmine\utils\TextFormat;
 
 abstract class BaseGui {
 
@@ -101,6 +102,7 @@ abstract class BaseGui {
 			$this->player->getInventory()->setItem($slot, $item);
 		}
 		$this->page = $pageNumber;
+		$this->player->sendTip(TextFormat::GREEN . TextFormat::BOLD . "[" . $pageNumber . "/" . count($this->defaults["dynamic"]) . "]");
 		return true;
 	}
 

@@ -5,15 +5,21 @@ namespace BlockHorizons\BlockQuests\quests\storage;
 use BlockHorizons\BlockQuests\quests\Quest;
 use pocketmine\Server;
 
-class YamlQuestStorage {
+class YamlQuestStorage extends QuestStorage {
 
 	/**
 	 * @param Quest $quest
+	 *
+	 * @return bool indicating whether quest was overwritten or not.
 	 */
-	public static function store(Quest $quest) {
-		$folder = Server::getInstance()->getPluginManager()->getPlugin("BlockQuests")->getDataFolder();
-		file_put_contents($folder . "quests/" . $quest->getId(), "");
-		yaml_emit_file($folder . "quests/" . $quest->getId(), $quest->parse());
+	public function store(Quest $quest): bool {
+		$return = false;
+		if($this->exists($quest->getId())) {
+			$return = true;
+		}
+		$folder = $this->getPlugin()->getDataFolder();
+		yaml_emit_file($folder . "quests/" . (string) $quest->getId() . ".yml", $quest->parse());
+		return $return;
 	}
 
 	/**
@@ -21,9 +27,37 @@ class YamlQuestStorage {
 	 *
 	 * @return Quest
 	 */
-	public static function fetch(int $questId): Quest {
-		$folder = Server::getInstance()->getPluginManager()->getPlugin("BlockQuests")->getDataFolder();
-		$data = yaml_parse_file($folder . "quests/" . $questId);
+	public function fetch(int $questId): Quest {
+		if(!$this->exists($questId)) {
+			return new Quest($questId);
+		}
+		$folder = $this->getPlugin()->getDataFolder();
+		$data = yaml_parse_file($folder . "quests/" . (string) $questId . ".yml");
 		return new Quest($questId, $data);
+	}
+
+	/**
+	 * @param int $questId
+	 *
+	 * @return bool
+	 */
+	public function exists(int $questId): bool {
+		if(file_exists($this->getPlugin()->getDataFolder() . "quests/" . (string) $questId . ".yml")) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @param int $questId
+	 *
+	 * @return bool
+	 */
+	public function delete(int $questId): bool {
+		if(!$this->exists($questId)) {
+			return false;
+		}
+		unlink($this->getPlugin()->getDataFolder() . "quests/" . (string) $questId . ".yml");
+		return true;
 	}
 }

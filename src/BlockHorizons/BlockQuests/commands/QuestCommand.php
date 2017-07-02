@@ -4,6 +4,7 @@ namespace BlockHorizons\BlockQuests\commands;
 
 use BlockHorizons\BlockQuests\BlockQuests;
 use BlockHorizons\BlockQuests\commands\quest_parameters\QuestCreateParameter;
+use BlockHorizons\BlockQuests\commands\quest_parameters\QuestDeleteParameter;
 use BlockHorizons\BlockQuests\commands\quest_parameters\QuestEditParameter;
 use pocketmine\command\CommandSender;
 use pocketmine\utils\TextFormat;
@@ -34,6 +35,9 @@ class QuestCommand extends BlockQuestsCommand {
 			case "edit":
 			case "modify":
 				return (new QuestEditParameter($this->getPlugin(), $sender, $args))->perform();
+			case "delete":
+			case "remove":
+				return (new QuestDeleteParameter($this->getPlugin(), $sender, $args))->perform();
 		}
 		return false;
 	}

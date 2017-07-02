@@ -5,7 +5,7 @@
 # Available providers:
 # - yaml
 # - json
-Quest-Saving-Dataprovider: yaml
+Quest-Saving-Data-Provider: yaml
 
 # Player quest data storage database.
 # Available databases:

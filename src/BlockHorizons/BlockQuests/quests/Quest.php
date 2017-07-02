@@ -2,8 +2,11 @@
 
 namespace BlockHorizons\BlockQuests\quests;
 
+use BlockHorizons\BlockQuests\BlockQuests;
 use BlockHorizons\BlockQuests\quests\storage\YamlQuestStorage;
+use pocketmine\block\Block;
 use pocketmine\item\Item;
+use pocketmine\Server;
 
 class Quest {
 
@@ -204,7 +207,9 @@ class Quest {
 	 * @return bool
 	 */
 	public function store(): bool {
-		YamlQuestStorage::store($this);
+		/** @var BlockQuests $plugin */
+		$plugin = Server::getInstance()->getPluginManager()->getPlugin("BlockQuests");
+		$plugin->getQuestStorage()->store($this);
 		return true;
 	}
 
