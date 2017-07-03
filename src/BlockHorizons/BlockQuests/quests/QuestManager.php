@@ -57,7 +57,6 @@ class QuestManager {
 	 * @return bool
 	 */
 	public function startQuest(Quest $quest, Player $player): bool {
-		if($this->getPlugin()->getPlayerDatabase()->)
 		$message = $this->getPlugin()->getBlockQuestsConfig()->getQuestStartingFormat();
 		$processedMessage = str_replace("{STARTING_MESSAGE}", $quest->getStartingMessage(), str_replace("{QUEST_NAME}", $quest->getQuestName(), str_replace("{QUEST_DESCRIPTION}", $quest->getQuestDescription(), $message)));
 		$player->sendMessage(TextFormat::GREEN . $processedMessage);
@@ -73,6 +72,8 @@ class QuestManager {
 	 */
 	public function finishQuest(Quest $quest, Player $player): bool {
 		$player->sendMessage(TextFormat::GREEN . $quest->getFinishingMessage());
+		$this->getPlugin()->getPlayerDatabase()->finishQuest($player, $quest->getId());
+		return true;
 	}
 
 	/**
