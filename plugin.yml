@@ -25,7 +25,7 @@ permissions:
           blockquests.command.delete:
             default: op
             description: "Allows access to deleting an existing quest."
-          blockquests.command.start:
+          blockquests.command.check:
             default: true
             description: "Allows access to starting an existing quest."
 ...

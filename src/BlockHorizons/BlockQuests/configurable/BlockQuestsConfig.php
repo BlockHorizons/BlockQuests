@@ -43,4 +43,11 @@ class BlockQuestsConfig {
 	public function getPlayerDataStorage(): string {
 		return $this->settings["Player-Quests-Database"] ?? "sqlite";
 	}
+
+	/**
+	 * @return string
+	 */
+	public function getQuestStartingFormat(): string {
+		return $this->settings["Quest-Starting-Format"] ?? "{STARTING_MESSAGE}\nQuest Started: {QUEST_NAME}\n{QUEST_DESCRIPTION}";
+	}
 }

@@ -48,6 +48,8 @@ class GuiUtils {
 	const MODE_FINISHING_MESSAGE = "finishingMessage";
 	const MODE_STARTED_MESSAGE = "startedMessage";
 	const MODE_FINISHED_MESSAGE = "finishedMessage";
+	const MODE_INSUFFICIENT_START_EXPERIENCE_MESSAGE = "insufficientStartExperienceMessage";
+	const MODE_MISSING_START_ITEMS_MESSAGE = "missingStartItemsMessage";
 
 	/**
 	 * @param int    $id

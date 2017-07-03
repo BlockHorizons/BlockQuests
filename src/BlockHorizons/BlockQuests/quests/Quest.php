@@ -29,6 +29,10 @@ class Quest {
 	public $startedMessage = "";
 	/** @var string */
 	public $finishedMessage = "";
+	/** @var string */
+	public $insufficientStartExperienceMessage = "";
+	/** @var string */
+	public $missingStartItemsMessage = "";
 
 	/** @var int */
 	private $id;
@@ -201,6 +205,34 @@ class Quest {
 	 */
 	public function setFinishedMessage(string $message) {
 		$this->finishedMessage = $message;
+	}
+
+	/**
+	 * @param string $message
+	 */
+	public function setMissingStartItemsMessage(string $message) {
+		$this->missingStartItemsMessage = $message;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getMissingStartItemsMessage(): string {
+		return $this->missingStartItemsMessage;
+	}
+
+	/**
+	 * @param string $message
+	 */
+	public function setInsufficientStartExperienceMessage(string $message) {
+		$this->insufficientStartExperienceMessage = $message;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getInsufficientStartExperienceMessage(): string {
+		return $this->insufficientStartExperienceMessage;
 	}
 
 	/**

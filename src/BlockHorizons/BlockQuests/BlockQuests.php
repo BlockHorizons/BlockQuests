@@ -5,7 +5,10 @@ namespace BlockHorizons\BlockQuests;
 use BlockHorizons\BlockQuests\commands\BlockQuestsCommand;
 use BlockHorizons\BlockQuests\commands\QuestCommand;
 use BlockHorizons\BlockQuests\configurable\BlockQuestsConfig;
+use BlockHorizons\BlockQuests\database\BaseDatabase;
+use BlockHorizons\BlockQuests\database\SQLiteQuestDatabase;
 use BlockHorizons\BlockQuests\gui\GuiHandler;
+use BlockHorizons\BlockQuests\listeners\EventListener;
 use BlockHorizons\BlockQuests\listeners\GuiListener;
 use BlockHorizons\BlockQuests\quests\QuestManager;
 use BlockHorizons\BlockQuests\quests\storage\JsonQuestStorage;
@@ -23,6 +26,8 @@ class BlockQuests extends PluginBase {
 	private $bqConfig;
 	/** @var QuestManager */
 	private $questManager;
+	/** @var BaseDatabase */
+	private $playerStorage;
 
 	public function onEnable() {
 		$this->saveDefaultConfig();
@@ -36,6 +41,7 @@ class BlockQuests extends PluginBase {
 		$this->guiHandler = new GuiHandler($this);
 		$this->questManager = new QuestManager($this);
 		$this->initializeStorage();
+		$this->initializeDatabase();
 	}
 
 	public function registerCommands() {
@@ -50,7 +56,8 @@ class BlockQuests extends PluginBase {
 
 	public function registerListeners() {
 		$listeners = [
-			new GuiListener($this)
+			new GuiListener($this),
+			new EventListener($this)
 		];
 		foreach($listeners as $listener) {
 			$this->getServer()->getPluginManager()->registerEvents($listener, $this);
@@ -61,7 +68,7 @@ class BlockQuests extends PluginBase {
 	 * @return QuestStorage
 	 */
 	public function initializeStorage(): QuestStorage {
-		switch($this->getBlockQuestsConfig()->getPlayerDataStorage()) {
+		switch($this->getBlockQuestsConfig()->getQuestDataStorage()) {
 			default:
 			case "yaml":
 			case "yml":
@@ -72,6 +79,27 @@ class BlockQuests extends PluginBase {
 				break;
 		}
 		return $this->questStorage;
+	}
+
+	/**
+	 * @return BaseDatabase
+	 */
+	public function initializeDatabase(): BaseDatabase {
+		switch($this->getBlockQuestsConfig()->getPlayerDataStorage()) {
+			default:
+			case "sqlite":
+			case "sqlite3":
+				$this->playerStorage = new SQLiteQuestDatabase($this);
+				break;
+		}
+		return $this->playerStorage;
+	}
+
+	/**
+	 * @return BaseDatabase
+	 */
+	public function getPlayerDatabase(): BaseDatabase {
+		return $this->playerStorage;
 	}
 
 	/**

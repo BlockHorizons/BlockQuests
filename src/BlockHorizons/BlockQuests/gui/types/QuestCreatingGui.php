@@ -40,8 +40,8 @@ class QuestCreatingGui extends BaseGui {
 				2 => [
 					4 => GuiUtils::item(GuiUtils::PINK, "Required Finishing Items", ["The items required to finish this quest"], GuiUtils::TYPE_ENTER_ITEMS, GuiUtils::MODE_FINISH_REQUIRED_ITEMS),
 					5 => GuiUtils::item(GuiUtils::LIGHT_BLUE, "Reward Commands", ["The commands executed when finishing this quest"], GuiUtils::TYPE_ENTER_COMMANDS, GuiUtils::MODE_REWARD_COMMANDS),
-					6 => Item::get(Item::AIR),
-					7 => Item::get(Item::AIR)
+					6 => GuiUtils::item(GuiUtils::ORANGE, "Insufficient Experience Message", ["The message sent if the player has too little experience to start"], GuiUtils::TYPE_ENTER_TEXT, GuiUtils::MODE_INSUFFICIENT_START_EXPERIENCE_MESSAGE),
+					7 => GuiUtils::item(GuiUtils::LIME, "Missing Starting Items Message", ["The message sent if the player does not have the required starting items"], GuiUtils::TYPE_ENTER_TEXT, GuiUtils::MODE_MISSING_START_ITEMS_MESSAGE)
 				]
 			]
 		];

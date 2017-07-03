@@ -4,7 +4,9 @@ namespace BlockHorizons\BlockQuests\quests;
 
 
 use BlockHorizons\BlockQuests\BlockQuests;
+use pocketmine\IPlayer;
 use pocketmine\Player;
+use pocketmine\utils\TextFormat;
 
 class QuestManager {
 
@@ -55,7 +57,12 @@ class QuestManager {
 	 * @return bool
 	 */
 	public function startQuest(Quest $quest, Player $player): bool {
-
+		if($this->getPlugin()->getPlayerDatabase()->)
+		$message = $this->getPlugin()->getBlockQuestsConfig()->getQuestStartingFormat();
+		$processedMessage = str_replace("{STARTING_MESSAGE}", $quest->getStartingMessage(), str_replace("{QUEST_NAME}", $quest->getQuestName(), str_replace("{QUEST_DESCRIPTION}", $quest->getQuestDescription(), $message)));
+		$player->sendMessage(TextFormat::GREEN . $processedMessage);
+		$this->getPlugin()->getPlayerDatabase()->startQuest($player, $quest->getId());
+		return true;
 	}
 
 	/**
@@ -65,7 +72,7 @@ class QuestManager {
 	 * @return bool
 	 */
 	public function finishQuest(Quest $quest, Player $player): bool {
-
+		$player->sendMessage(TextFormat::GREEN . $quest->getFinishingMessage());
 	}
 
 	/**
@@ -78,6 +85,15 @@ class QuestManager {
 			$this->quests[$id] = $this->plugin->getQuestStorage()->fetch($id);
 		}
 		return $this->quests[$id];
+	}
+
+	/**
+	 * @param int $id
+	 *
+	 * @return bool
+	 */
+	public function questExists(int $id): bool {
+		return $this->getPlugin()->getQuestStorage()->exists($id);
 	}
 
 	/**
