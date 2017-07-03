@@ -26,7 +26,7 @@ class SQLiteQuestDatabase extends BaseDatabase {
 		$query = "CREATE TABLE IF NOT EXISTS QuestStats(
 			Player VARCHAR(16) PRIMARY KEY,
 			StartedQuests VARCHAR,
-			FinishedQuests VARCHAR, 
+			FinishedQuests VARCHAR
 		)";
 		return $this->database->exec($query);
 	}
