@@ -38,7 +38,7 @@ class QuestCreateParameter extends BaseParameter {
 			$this->sender->sendMessage(TextFormat::RED . "[Error] You are already creating a quest.");
 			return true;
 		}
-, 		if($this->getPlugin()->getQuestManager()->questExists((int) $this->args[1])) {
+		if($this->getPlugin()->getQuestManager()->questExists((int) $this->args[1])) {
 			$this->sender->sendMessage(TextFormat::RED . "[Error] A quest with that quest ID already exists. Use \'/quest edit " . $this->args[1] . "\' to edit it.");
 			return true;
 		}

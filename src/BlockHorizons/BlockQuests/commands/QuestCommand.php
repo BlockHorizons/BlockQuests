@@ -3,6 +3,7 @@
 namespace BlockHorizons\BlockQuests\commands;
 
 use BlockHorizons\BlockQuests\BlockQuests;
+use BlockHorizons\BlockQuests\commands\quest_parameters\QuestCheckParameter;
 use BlockHorizons\BlockQuests\commands\quest_parameters\QuestCreateParameter;
 use BlockHorizons\BlockQuests\commands\quest_parameters\QuestDeleteParameter;
 use BlockHorizons\BlockQuests\commands\quest_parameters\QuestEditParameter;
@@ -38,6 +39,8 @@ class QuestCommand extends BlockQuestsCommand {
 			case "delete":
 			case "remove":
 				return (new QuestDeleteParameter($this->getPlugin(), $sender, $args))->perform();
+			case "check":
+				return (new QuestCheckParameter($this->getPlugin(), $sender, $args))->perform();
 		}
 		return false;
 	}
