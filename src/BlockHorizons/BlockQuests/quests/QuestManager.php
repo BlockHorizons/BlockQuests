@@ -4,6 +4,7 @@ namespace BlockHorizons\BlockQuests\quests;
 
 
 use BlockHorizons\BlockQuests\BlockQuests;
+use pocketmine\command\ConsoleCommandSender;
 use pocketmine\IPlayer;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
@@ -73,6 +74,9 @@ class QuestManager {
 	public function finishQuest(Quest $quest, Player $player): bool {
 		$player->sendMessage(TextFormat::GREEN . $quest->getFinishingMessage());
 		$this->getPlugin()->getPlayerDatabase()->finishQuest($player, $quest->getId());
+		foreach($quest->getRewardCommands() as $command) {
+			$this->getPlugin()->getServer()->dispatchCommand(new ConsoleCommandSender(), $command);
+		}
 		return true;
 	}
 

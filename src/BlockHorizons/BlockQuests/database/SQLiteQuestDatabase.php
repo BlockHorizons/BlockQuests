@@ -56,6 +56,9 @@ class SQLiteQuestDatabase extends BaseDatabase {
 			if($key === "Player") {
 				continue;
 			}
+			if(empty($result) || $result === 0) {
+				continue;
+			}
 			$results[$key] = unserialize($result);
 		}
 		return $results;
