@@ -75,7 +75,11 @@ abstract class BaseDatabase {
 			return [];
 		}
 		foreach($this->getPlayerData($player)["StartedQuests"] as $questId) {
-			if(in_array($questId, $this->getPlayerData($player)["FinishedQuests"])) {
+			$quests = [];
+			foreach($this->getFinishedQuests($player) as $quest)  {
+				$quests[] = $quest->getId();
+			}
+			if(in_array($questId, $quests)) {
 				continue;
 			}
 			$quests[] = $this->plugin->getQuestStorage()->fetch($questId);

@@ -39,7 +39,7 @@ class QuestEditParameter extends BaseParameter {
 			return true;
 		}
 		if(!$this->getPlugin()->getQuestManager()->questExists((int) $this->args[1])) {
-			$this->sender->sendMessage(TextFormat::RED . "[Error] A quest with that quest ID does not exist. Use \'/quest create " . $this->args[1] . "\' to create it.");
+			$this->sender->sendMessage(TextFormat::RED . "[Error] A quest with that quest ID does not exist. Use '/quest create " . $this->args[1] . "' to create it.");
 			return true;
 		}
 		$gui = new QuestEditingGui($this->getPlugin(), $this->sender, (int) $this->args[1]);
