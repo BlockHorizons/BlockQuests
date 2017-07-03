@@ -28,8 +28,8 @@ class QuestDeleteParameter extends BaseParameter {
 			$this->sender->sendMessage(TextFormat::RED . "[Error] The quest ID should be numeric.");
 			return true;
 		}
-		$this->getPlugin()->getQuestStorage()->delete((int) $this->args[1]);
-		$this->sender->sendMessage(TextFormat::GREEN . "Quest with ID " . TextFormat::AQUA . (string) $this->args[1] . TextFormat::GREEN . " succesfully deleted.");
+		$this->getPlugin()->getQuestManager()->deleteQuest((int) $this->args[1]);
+		$this->sender->sendMessage(TextFormat::GREEN . "Quest with ID " . TextFormat::AQUA . (string) $this->args[1] . TextFormat::GREEN . " successfully deleted.");
 		return true;
 	}
 }

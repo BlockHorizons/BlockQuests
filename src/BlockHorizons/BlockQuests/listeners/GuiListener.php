@@ -35,14 +35,17 @@ class GuiListener implements Listener {
 				switch($item->getNamedTag()->bqGuiInputType->getValue()) {
 					case GuiUtils::TYPE_ENTER_ITEMS:
 						$nameList = [];
-						$inputItems = explode(",", $input);
-						foreach($inputItems as &$inputItem) {
+						$inputRaw = explode(",", $input);
+						$inputItems = [];
+						foreach($inputRaw as $inputItem) {
 							if(is_numeric($inputItem)) {
-								$inputItem = Item::get((int) $inputItem);
+								$inputItems[] = Item::get((int) $inputItem);
 							} else {
-								$inputItem = Item::fromString($inputItem);
+								$inputItems[] = Item::fromString($inputItem);
 							}
-							$nameList[] = $inputItem->getName();
+						}
+						foreach($inputItems as $item) {
+							$nameList[] = $item->getName();
 						}
 						$event->getPlayer()->sendMessage(TextFormat::GREEN . "Input Items: " . TextFormat::AQUA . implode(", ", $nameList));
 						/** @var Item $inputItem */

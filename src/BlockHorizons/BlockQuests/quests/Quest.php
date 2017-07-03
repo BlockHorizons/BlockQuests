@@ -4,6 +4,7 @@ namespace BlockHorizons\BlockQuests\quests;
 
 use BlockHorizons\BlockQuests\BlockQuests;
 use pocketmine\item\Item;
+use pocketmine\Player;
 use pocketmine\Server;
 
 class Quest {
@@ -28,6 +29,8 @@ class Quest {
 	public $startedMessage = "";
 	/** @var string */
 	public $finishedMessage = "";
+
+	/** @var int */
 	private $id;
 
 	/**
@@ -216,8 +219,51 @@ class Quest {
 	public function parse(): array {
 		$data = [];
 		foreach($this as $key => $value) {
+			if($key === "id") {
+				continue;
+			}
 			$data[$key] = $value;
 		}
 		return $data;
+	}
+
+	/**
+	 * @param Player $player
+	 *
+	 * @return bool
+	 */
+	public function checkStartingExperience(Player $player): bool {
+		if($player->getXpLevel() >= $this->startExperienceLevel) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * @param Player $player
+	 *
+	 * @return bool
+	 */
+	public function checkStartingItems(Player $player): bool {
+		foreach($this->getStartRequiredItems() as $item) {
+			if(!$player->getInventory()->contains($item)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * @param Player $player
+	 *
+	 * @return bool
+	 */
+	public function checkFinishingItems(Player $player): bool {
+		foreach($this->getFinishRequiredItems() as $item) {
+			if(!$player->getInventory()->contains($item)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

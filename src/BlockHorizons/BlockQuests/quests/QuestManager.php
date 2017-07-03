@@ -4,11 +4,14 @@ namespace BlockHorizons\BlockQuests\quests;
 
 
 use BlockHorizons\BlockQuests\BlockQuests;
+use pocketmine\Player;
 
 class QuestManager {
 
 	/** @var BlockQuests */
 	private $plugin;
+	/** @var Quest[] */
+	private $quests = [];
 
 	public function __construct(BlockQuests $plugin) {
 		$this->plugin = $plugin;
@@ -46,11 +49,48 @@ class QuestManager {
 	}
 
 	/**
+	 * @param Quest  $quest
+	 * @param Player $player
+	 *
+	 * @return bool
+	 */
+	public function startQuest(Quest $quest, Player $player): bool {
+
+	}
+
+	/**
+	 * @param Quest  $quest
+	 * @param Player $player
+	 *
+	 * @return bool
+	 */
+	public function finishQuest(Quest $quest, Player $player): bool {
+
+	}
+
+	/**
 	 * @param int $id
 	 *
 	 * @return Quest
 	 */
 	public function getQuestById(int $id): Quest {
-		return $this->plugin->getQuestStorage()->fetch($id);
+		if(!isset($this->quests[$id])) {
+			$this->quests[$id] = $this->plugin->getQuestStorage()->fetch($id);
+		}
+		return $this->quests[$id];
+	}
+
+	/**
+	 * @param int $id
+	 *
+	 * @return bool
+	 */
+	public function deleteQuest(int $id): bool {
+		unset($this->quests[$id]);
+		if($this->getPlugin()->getQuestStorage()->exists($id)) {
+			$this->getPlugin()->getQuestStorage()->delete($id);
+			return true;
+		}
+		return false;
 	}
 }

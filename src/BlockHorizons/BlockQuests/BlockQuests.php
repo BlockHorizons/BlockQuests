@@ -7,6 +7,7 @@ use BlockHorizons\BlockQuests\commands\QuestCommand;
 use BlockHorizons\BlockQuests\configurable\BlockQuestsConfig;
 use BlockHorizons\BlockQuests\gui\GuiHandler;
 use BlockHorizons\BlockQuests\listeners\GuiListener;
+use BlockHorizons\BlockQuests\quests\QuestManager;
 use BlockHorizons\BlockQuests\quests\storage\JsonQuestStorage;
 use BlockHorizons\BlockQuests\quests\storage\QuestStorage;
 use BlockHorizons\BlockQuests\quests\storage\YamlQuestStorage;
@@ -20,6 +21,8 @@ class BlockQuests extends PluginBase {
 	private $questStorage;
 	/** @var BlockQuestsConfig */
 	private $bqConfig;
+	/** @var QuestManager */
+	private $questManager;
 
 	public function onEnable() {
 		$this->saveDefaultConfig();
@@ -31,6 +34,7 @@ class BlockQuests extends PluginBase {
 		$this->registerListeners();
 
 		$this->guiHandler = new GuiHandler($this);
+		$this->questManager = new QuestManager($this);
 		$this->initializeStorage();
 	}
 
@@ -89,5 +93,12 @@ class BlockQuests extends PluginBase {
 	 */
 	public function getQuestStorage(): QuestStorage {
 		return $this->questStorage;
+	}
+
+	/**
+	 * @return QuestManager
+	 */
+	public function getQuestManager(): QuestManager {
+		return $this->questManager;
 	}
 }

@@ -41,7 +41,7 @@ class GuiUtils {
 	const MODE_QUEST_DESCRIPTION = "questDescription";
 	const MODE_START_EXPERIENCE_LEVEL = "startExperienceLevel";
 	const MODE_START_REQUIRED_ITEMS = "startRequiredItems";
-	const MODE_REWARD_COMMANDS = "finishRequiredItems";
+	const MODE_REWARD_COMMANDS = "rewardCommands";
 	const MODE_FINISH_REQUIRED_ITEMS = "finishRequiredItems";
 
 	const MODE_STARTING_MESSAGE = "startingMessage";
