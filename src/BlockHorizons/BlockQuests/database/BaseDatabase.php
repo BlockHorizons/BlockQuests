@@ -48,6 +48,9 @@ abstract class BaseDatabase {
 	 */
 	public function getFinishedQuests(IPlayer $player): array {
 		$quests = [];
+		if(empty($this->getPlayerData($player)["FinishedQuests"])) {
+			return [];
+		}
 		foreach($this->getPlayerData($player)["FinishedQuests"] as $questId) {
 			$quests[] = $this->plugin->getQuestStorage()->fetch($questId);
 		}
@@ -68,6 +71,9 @@ abstract class BaseDatabase {
 	 */
 	public function getStartedQuests(IPlayer $player): array {
 		$quests = [];
+		if(empty($this->getPlayerData($player)["StartedQuests"])) {
+			return [];
+		}
 		foreach($this->getPlayerData($player)["StartedQuests"] as $questId) {
 			if(in_array($questId, $this->getPlayerData($player)["FinishedQuests"])) {
 				continue;
