@@ -20,7 +20,7 @@ class QuestResetParameter extends BaseParameter {
 			$this->sender->sendMessage(TextFormat::RED . "[Error] You do not have permission to use this command.");
 			return true;
 		}
-		if(count($this->args) < 2 || count($this->args) > 2) {
+		if(count($this->args) < 1 || count($this->args) > 2) {
 			$this->sender->sendMessage(TextFormat::RED . "[Usage] /quest reset [player]");
 			return true;
 		}

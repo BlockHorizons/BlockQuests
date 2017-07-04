@@ -94,9 +94,12 @@ abstract class BaseDatabase {
 	 * @return bool
 	 */
 	public function startQuest(IPlayer $player, int $questId): bool {
-		$startedQuests = $this->getStartedQuests($player);
-		$startedQuests[] = $questId;
-		return $this->updateStartedQuests($player, serialize($startedQuests));
+		$startedQuestIds =[];
+		foreach($this->getStartedQuests($player) as $quest) {
+			$startedQuestIds[] = $quest->getId();
+		}
+		$startedQuestIds[] = $questId;
+		return $this->updateStartedQuests($player, serialize($startedQuestIds));
 	}
 
 	/**
@@ -106,9 +109,12 @@ abstract class BaseDatabase {
 	 * @return bool
 	 */
 	public function finishQuest(IPlayer $player, int $questId): bool {
-		$finishedQuests = $this->getFinishedQuests($player);
-		$finishedQuests[] = $questId;
-		return $this->updateFinishedQuests($player, serialize($finishedQuests));
+		$finishedQuestIds = [];
+		foreach($this->getFinishedQuests($player) as $quest) {
+			$finishedQuestIds[] = $quest->getId();
+		}
+		$finishedQuestIds[] = $questId;
+		return $this->updateFinishedQuests($player, serialize($finishedQuestIds));
 	}
 
 	/**
