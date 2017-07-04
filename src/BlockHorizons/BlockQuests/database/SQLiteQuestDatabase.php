@@ -157,7 +157,7 @@ class SQLiteQuestDatabase extends BaseDatabase {
 		if(!$this->playerExists($player)) {
 			return false;
 		}
-		foreach($this->getStartedQuests($player) as $quest) {
+		foreach($this->getFinishedQuests($player) as $quest) {
 			if($quest->getId() === $questId) {
 				return true;
 			}
@@ -175,7 +175,7 @@ class SQLiteQuestDatabase extends BaseDatabase {
 		if(!$this->playerExists($player)) {
 			return false;
 		}
-		foreach($this->getFinishedQuests($player) as $quest) {
+		foreach($this->getStartedQuests($player) as $quest) {
 			if($quest->getId() === $questId) {
 				return true;
 			}
