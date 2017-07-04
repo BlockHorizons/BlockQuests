@@ -44,14 +44,11 @@ class GuiListener implements Listener {
 								$inputItems[] = Item::fromString($inputItem);
 							}
 						}
-						foreach($inputItems as $item) {
-							$nameList[] = $item->getName();
-						}
-						$event->getPlayer()->sendMessage(TextFormat::GREEN . "Input Items: " . TextFormat::AQUA . implode(", ", $nameList));
-						/** @var Item $inputItem */
 						foreach($inputItems as $inputItem) {
+							$nameList[] = $inputItem->getName();
 							$output[] = (string) $inputItem->getId() . ":" . (string) $inputItem->getDamage() . ":" . (string) $inputItem->getCount();
 						}
+						$event->getPlayer()->sendMessage(TextFormat::GREEN . "Input Items: " . TextFormat::AQUA . implode(", ", $nameList));
 						break;
 					case GuiUtils::TYPE_ENTER_INT:
 						if(!is_numeric($input)) {

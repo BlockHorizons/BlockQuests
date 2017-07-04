@@ -2,7 +2,6 @@
 
 namespace BlockHorizons\BlockQuests\quests;
 
-
 use BlockHorizons\BlockQuests\gui\GuiUtils;
 
 class QuestValidator {

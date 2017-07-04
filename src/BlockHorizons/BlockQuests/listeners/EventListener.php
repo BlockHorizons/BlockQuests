@@ -21,6 +21,9 @@ class EventListener implements Listener {
 		return $this->plugin;
 	}
 
+	/**
+	 * @param PlayerJoinEvent $event
+	 */
 	public function onJoin(PlayerJoinEvent $event) {
 		$this->getPlugin()->getPlayerDatabase()->addPlayer($event->getPlayer());
 	}

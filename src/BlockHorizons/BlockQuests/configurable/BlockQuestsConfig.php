@@ -2,7 +2,6 @@
 
 namespace BlockHorizons\BlockQuests\configurable;
 
-
 use BlockHorizons\BlockQuests\BlockQuests;
 
 class BlockQuestsConfig {

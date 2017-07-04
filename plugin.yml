@@ -28,4 +28,14 @@ permissions:
           blockquests.command.check:
             default: true
             description: "Allows access to starting an existing quest."
+          blockquests.command.reset:
+            default: false
+            description: "Allows resetting all quests data."
+            children:
+              blockquests.command.reset.self:
+                default: true
+                description: "Allows resetting your own quests data."
+              blockquests.command.reset.others:
+                default: op
+                description: "Allows resetting quests data of other players."
 ...

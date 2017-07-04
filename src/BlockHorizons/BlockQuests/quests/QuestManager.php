@@ -2,7 +2,6 @@
 
 namespace BlockHorizons\BlockQuests\quests;
 
-
 use BlockHorizons\BlockQuests\BlockQuests;
 use pocketmine\command\ConsoleCommandSender;
 use pocketmine\IPlayer;

@@ -30,6 +30,10 @@ class QuestResetParameter extends BaseParameter {
 				$this->sender->sendMessage(TextFormat::RED . "[Error] The given player could not be found.");
 				return true;
 			}
+			if(!$this->sender->hasPermission("blockquests.command.reset.others")) {
+				$this->sender->sendMessage(TextFormat::RED . "[Error] You don't have permission to reset the quest data of other players.");
+				return true;
+			}
 		}
 		$this->getPlugin()->getPlayerDatabase()->clearData($player);
 		$this->getPlugin()->getPlayerDatabase()->addPlayer($player);

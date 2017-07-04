@@ -2,7 +2,6 @@
 
 namespace BlockHorizons\BlockQuests\quests\storage;
 
-
 use BlockHorizons\BlockQuests\quests\Quest;
 
 class JsonQuestStorage extends QuestStorage {

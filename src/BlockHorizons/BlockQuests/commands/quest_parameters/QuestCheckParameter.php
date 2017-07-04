@@ -38,7 +38,7 @@ class QuestCheckParameter extends BaseParameter {
 			return true;
 		}
 		$quest = $this->getPlugin()->getQuestManager()->getQuestById((int) $this->args[1]);
-		if(!$this->getPlugin()->getPlayerDatabase()->hasQuestStarted($this->sender, $quest->getId())) {
+		if(!$this->getPlugin()->getPlayerDatabase()->hasQuestStarted($this->sender, $quest->getId()) && !$this->getPlugin()->getPlayerDatabase()->hasQuestFinished($this->sender, $quest->getId())) {
 			if(!$quest->checkStartingExperience($this->sender)) {
 				$this->sender->sendMessage(TextFormat::RED . $quest->getInsufficientStartExperienceMessage());
 				return true;
