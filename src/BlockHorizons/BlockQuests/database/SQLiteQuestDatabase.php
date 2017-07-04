@@ -4,6 +4,7 @@ namespace BlockHorizons\BlockQuests\database;
 
 
 use BlockHorizons\BlockQuests\BlockQuests;
+use BlockHorizons\BlockQuests\quests\Quest;
 use pocketmine\IPlayer;
 
 class SQLiteQuestDatabase extends BaseDatabase {

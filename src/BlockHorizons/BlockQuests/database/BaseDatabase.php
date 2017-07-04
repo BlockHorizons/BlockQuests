@@ -54,6 +54,11 @@ abstract class BaseDatabase {
 		foreach($this->getPlayerData($player)["FinishedQuests"] as $questId) {
 			$quests[] = $this->plugin->getQuestStorage()->fetch($questId);
 		}
+		foreach($quests as $key => $quest) {
+			if(!$quest instanceof Quest) {
+				unset($quests[$key]);
+			}
+		}
 		return $quests;
 	}
 
@@ -83,6 +88,11 @@ abstract class BaseDatabase {
 				continue;
 			}
 			$quests[] = $this->plugin->getQuestStorage()->fetch($questId);
+		}
+		foreach($quests as $key => $quest) {
+			if(!$quest instanceof Quest) {
+				unset($quests[$key]);
+			}
 		}
 		return $quests;
 	}
