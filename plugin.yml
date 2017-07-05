@@ -47,5 +47,5 @@ permissions:
                 description: "Allows listing the blockquests help page for normal players."
               blockquests.command.help.others:
                 default: op
-                description: "Allows listing the blockquests help page of operators.
+                description: "Allows listing the blockquests help page of operators."
 ...
