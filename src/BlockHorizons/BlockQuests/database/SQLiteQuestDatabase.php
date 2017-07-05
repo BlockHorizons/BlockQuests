@@ -3,7 +3,6 @@
 namespace BlockHorizons\BlockQuests\database;
 
 use BlockHorizons\BlockQuests\BlockQuests;
-use BlockHorizons\BlockQuests\quests\Quest;
 use pocketmine\IPlayer;
 
 class SQLiteQuestDatabase extends BaseDatabase {
@@ -65,19 +64,12 @@ class SQLiteQuestDatabase extends BaseDatabase {
 	}
 
 	/**
-	 * @param IPlayer $player
+	 * @param string $string
 	 *
-	 * @return bool
+	 * @return string
 	 */
-	public function playerExists(IPlayer $player): bool {
-		$player = strtolower($player->getName());
-		$query = "SELECT * FROM QuestStats WHERE Player = '" . $this->escape($player) . "'";
-
-		$result = $this->database->query($query)->fetchArray(SQLITE3_ASSOC);
-		if(empty($result)) {
-			return false;
-		}
-		return true;
+	public function escape(string $string): string {
+		return \SQLite3::escapeString($string);
 	}
 
 	/**
@@ -92,6 +84,22 @@ class SQLiteQuestDatabase extends BaseDatabase {
 		$player = strtolower($player->getName());
 		$query = "INSERT INTO QuestStats(Player, StartedQuests, FinishedQuests) VALUES ('" . $this->escape($player) . "', 0, 0)";
 		return $this->database->exec($query);
+	}
+
+	/**
+	 * @param IPlayer $player
+	 *
+	 * @return bool
+	 */
+	public function playerExists(IPlayer $player): bool {
+		$player = strtolower($player->getName());
+		$query = "SELECT * FROM QuestStats WHERE Player = '" . $this->escape($player) . "'";
+
+		$result = $this->database->query($query)->fetchArray(SQLITE3_ASSOC);
+		if(empty($result)) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -136,15 +144,6 @@ class SQLiteQuestDatabase extends BaseDatabase {
 		$player = strtolower($player->getName());
 		$query = "DELETE FROM QuestStats WHERE Player = '" . $this->escape($player) . "'";
 		return $this->database->exec($query);
-	}
-
-	/**
-	 * @param string $string
-	 *
-	 * @return string
-	 */
-	public function escape(string $string): string {
-		return \SQLite3::escapeString($string);
 	}
 
 	/**

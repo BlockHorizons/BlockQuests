@@ -18,6 +18,11 @@ abstract class BaseDatabase {
 	}
 
 	/**
+	 * @return bool
+	 */
+	public abstract function prepare(): bool;
+
+	/**
 	 * @return BlockQuests
 	 */
 	public function getPlugin(): BlockQuests {
@@ -25,21 +30,61 @@ abstract class BaseDatabase {
 	}
 
 	/**
-	 * @return bool
-	 */
-	public abstract function prepare(): bool;
-
-	/**
-	 * @return bool
-	 */
-	public abstract function close(): bool;
-
-	/**
 	 * @param string $string
 	 *
 	 * @return string
 	 */
 	public abstract function escape(string $string): string;
+
+	/**
+	 * @param IPlayer $player
+	 * @param int     $questId
+	 *
+	 * @return bool
+	 */
+	public function startQuest(IPlayer $player, int $questId): bool {
+		$startedQuestIds = [];
+		foreach($this->getStartedQuests($player) as $quest) {
+			$startedQuestIds[] = $quest->getId();
+		}
+		$startedQuestIds[] = $questId;
+		return $this->updateStartedQuests($player, serialize($startedQuestIds));
+	}
+
+	/**
+	 * @param IPlayer $player
+	 *
+	 * @return Quest[]
+	 */
+	public function getStartedQuests(IPlayer $player): array {
+		$quests = [];
+		if(empty($this->getPlayerData($player)["StartedQuests"])) {
+			return [];
+		}
+		foreach($this->getPlayerData($player)["StartedQuests"] as $questId) {
+			$quests = [];
+			foreach($this->getFinishedQuests($player) as $quest) {
+				$quests[] = $quest->getId();
+			}
+			if(in_array($questId, $quests)) {
+				continue;
+			}
+			$quests[] = $this->plugin->getQuestStorage()->fetch($questId);
+		}
+		foreach($quests as $key => $quest) {
+			if(!$quest instanceof Quest) {
+				unset($quests[$key]);
+			}
+		}
+		return $quests;
+	}
+
+	/**
+	 * @param IPlayer $player
+	 *
+	 * @return array
+	 */
+	public abstract function getPlayerData(IPlayer $player): array;
 
 	/**
 	 * @param IPlayer $player
@@ -64,53 +109,11 @@ abstract class BaseDatabase {
 
 	/**
 	 * @param IPlayer $player
-	 *
-	 * @return array
-	 */
-	public abstract function getPlayerData(IPlayer $player): array;
-
-	/**
-	 * @param IPlayer $player
-	 *
-	 * @return Quest[]
-	 */
-	public function getStartedQuests(IPlayer $player): array {
-		$quests = [];
-		if(empty($this->getPlayerData($player)["StartedQuests"])) {
-			return [];
-		}
-		foreach($this->getPlayerData($player)["StartedQuests"] as $questId) {
-			$quests = [];
-			foreach($this->getFinishedQuests($player) as $quest)  {
-				$quests[] = $quest->getId();
-			}
-			if(in_array($questId, $quests)) {
-				continue;
-			}
-			$quests[] = $this->plugin->getQuestStorage()->fetch($questId);
-		}
-		foreach($quests as $key => $quest) {
-			if(!$quest instanceof Quest) {
-				unset($quests[$key]);
-			}
-		}
-		return $quests;
-	}
-
-	/**
-	 * @param IPlayer $player
-	 * @param int     $questId
+	 * @param string  $serializedData
 	 *
 	 * @return bool
 	 */
-	public function startQuest(IPlayer $player, int $questId): bool {
-		$startedQuestIds =[];
-		foreach($this->getStartedQuests($player) as $quest) {
-			$startedQuestIds[] = $quest->getId();
-		}
-		$startedQuestIds[] = $questId;
-		return $this->updateStartedQuests($player, serialize($startedQuestIds));
-	}
+	public abstract function updateStartedQuests(IPlayer $player, string $serializedData): bool;
 
 	/**
 	 * @param IPlayer $player
@@ -126,14 +129,6 @@ abstract class BaseDatabase {
 		$finishedQuestIds[] = $questId;
 		return $this->updateFinishedQuests($player, serialize($finishedQuestIds));
 	}
-
-	/**
-	 * @param IPlayer $player
-	 * @param string  $serializedData
-	 *
-	 * @return bool
-	 */
-	public abstract function updateStartedQuests(IPlayer $player, string $serializedData): bool;
 
 	/**
 	 * @param IPlayer $player
@@ -183,4 +178,9 @@ abstract class BaseDatabase {
 	public function __destruct() {
 		$this->close();
 	}
+
+	/**
+	 * @return bool
+	 */
+	public abstract function close(): bool;
 }

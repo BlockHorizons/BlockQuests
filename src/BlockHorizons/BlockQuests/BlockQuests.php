@@ -82,6 +82,13 @@ class BlockQuests extends PluginBase {
 	}
 
 	/**
+	 * @return BlockQuestsConfig
+	 */
+	public function getBlockQuestsConfig(): BlockQuestsConfig {
+		return $this->bqConfig;
+	}
+
+	/**
 	 * @return BaseDatabase
 	 */
 	public function initializeDatabase(): BaseDatabase {
@@ -100,13 +107,6 @@ class BlockQuests extends PluginBase {
 	 */
 	public function getPlayerDatabase(): BaseDatabase {
 		return $this->playerStorage;
-	}
-
-	/**
-	 * @return BlockQuestsConfig
-	 */
-	public function getBlockQuestsConfig(): BlockQuestsConfig {
-		return $this->bqConfig;
 	}
 
 	/**

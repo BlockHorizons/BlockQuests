@@ -15,16 +15,16 @@ class EventListener implements Listener {
 	}
 
 	/**
-	 * @return BlockQuests
-	 */
-	public function getPlugin(): BlockQuests {
-		return $this->plugin;
-	}
-
-	/**
 	 * @param PlayerJoinEvent $event
 	 */
 	public function onJoin(PlayerJoinEvent $event) {
 		$this->getPlugin()->getPlayerDatabase()->addPlayer($event->getPlayer());
+	}
+
+	/**
+	 * @return BlockQuests
+	 */
+	public function getPlugin(): BlockQuests {
+		return $this->plugin;
 	}
 }

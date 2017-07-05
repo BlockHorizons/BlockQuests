@@ -102,42 +102,6 @@ class Quest {
 	}
 
 	/**
-	 * @return Item[]
-	 */
-	public function getStartRequiredItems(): array {
-		$items = [];
-		foreach($this->startRequiredItems as $item) {
-			$items[] = Item::fromString($item);
-		}
-		return $items;
-	}
-
-	/**
-	 * @param string[] $items
-	 */
-	public function setStartRequiredItems(array $items) {
-		$this->startRequiredItems = $items;
-	}
-
-	/**
-	 * @return Item[]
-	 */
-	public function getFinishRequiredItems(): array {
-		$items = [];
-		foreach($this->finishRequiredItems as $item) {
-			$items[] = Item::fromString($item);
-		}
-		return $items;
-	}
-
-	/**
-	 * @param string[] $items
-	 */
-	public function setFinishRequiredItems(array $items) {
-		$this->finishRequiredItems = $items;
-	}
-
-	/**
 	 * @return string[]
 	 */
 	public function getRewardCommands(): array {
@@ -208,13 +172,6 @@ class Quest {
 	}
 
 	/**
-	 * @param string $message
-	 */
-	public function setMissingStartItemsMessage(string $message) {
-		$this->missingStartItemsMessage = $message;
-	}
-
-	/**
 	 * @return string
 	 */
 	public function getMissingStartItemsMessage(): string {
@@ -224,8 +181,8 @@ class Quest {
 	/**
 	 * @param string $message
 	 */
-	public function setInsufficientStartExperienceMessage(string $message) {
-		$this->insufficientStartExperienceMessage = $message;
+	public function setMissingStartItemsMessage(string $message) {
+		$this->missingStartItemsMessage = $message;
 	}
 
 	/**
@@ -233,6 +190,13 @@ class Quest {
 	 */
 	public function getInsufficientStartExperienceMessage(): string {
 		return $this->insufficientStartExperienceMessage;
+	}
+
+	/**
+	 * @param string $message
+	 */
+	public function setInsufficientStartExperienceMessage(string $message) {
+		$this->insufficientStartExperienceMessage = $message;
 	}
 
 	/**
@@ -286,6 +250,24 @@ class Quest {
 	}
 
 	/**
+	 * @return Item[]
+	 */
+	public function getStartRequiredItems(): array {
+		$items = [];
+		foreach($this->startRequiredItems as $item) {
+			$items[] = Item::fromString($item);
+		}
+		return $items;
+	}
+
+	/**
+	 * @param string[] $items
+	 */
+	public function setStartRequiredItems(array $items) {
+		$this->startRequiredItems = $items;
+	}
+
+	/**
 	 * @param Player $player
 	 *
 	 * @return bool
@@ -297,5 +279,23 @@ class Quest {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * @return Item[]
+	 */
+	public function getFinishRequiredItems(): array {
+		$items = [];
+		foreach($this->finishRequiredItems as $item) {
+			$items[] = Item::fromString($item);
+		}
+		return $items;
+	}
+
+	/**
+	 * @param string[] $items
+	 */
+	public function setFinishRequiredItems(array $items) {
+		$this->finishRequiredItems = $items;
 	}
 }
