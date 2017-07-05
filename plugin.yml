@@ -1,7 +1,7 @@
 ---
 name: "BlockQuests"
 author: "BlockHorizons"
-version: 0.99.0
+version: 1.0.0
 main: BlockHorizons\BlockQuests\BlockQuests
 api:
 - 3.0.0-ALPHA5
