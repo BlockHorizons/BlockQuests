@@ -4,9 +4,8 @@ namespace BlockHorizons\BlockQuests\quests;
 
 use BlockHorizons\BlockQuests\BlockQuests;
 use pocketmine\command\ConsoleCommandSender;
-use pocketmine\IPlayer;
 use pocketmine\Player;
-use pocketmine\utils\TextFormat;
+use pocketmine\utils\TextFormat as TF;
 
 class QuestManager {
 
@@ -17,13 +16,6 @@ class QuestManager {
 
 	public function __construct(BlockQuests $plugin) {
 		$this->plugin = $plugin;
-	}
-
-	/**
-	 * @return BlockQuests
-	 */
-	public function getPlugin(): BlockQuests {
-		return $this->plugin;
 	}
 
 	/**
@@ -51,35 +43,6 @@ class QuestManager {
 	}
 
 	/**
-	 * @param Quest  $quest
-	 * @param Player $player
-	 *
-	 * @return bool
-	 */
-	public function startQuest(Quest $quest, Player $player): bool {
-		$message = $this->getPlugin()->getBlockQuestsConfig()->getQuestStartingFormat();
-		$processedMessage = str_replace("{STARTING_MESSAGE}", $quest->getStartingMessage(), str_replace("{QUEST_NAME}", $quest->getQuestName(), str_replace("{QUEST_DESCRIPTION}", $quest->getQuestDescription(), $message)));
-		$player->sendMessage(TextFormat::GREEN . $processedMessage);
-		$this->getPlugin()->getPlayerDatabase()->startQuest($player, $quest->getId());
-		return true;
-	}
-
-	/**
-	 * @param Quest  $quest
-	 * @param Player $player
-	 *
-	 * @return bool
-	 */
-	public function finishQuest(Quest $quest, Player $player): bool {
-		$player->sendMessage(TextFormat::GREEN . $quest->getFinishingMessage());
-		$this->getPlugin()->getPlayerDatabase()->finishQuest($player, $quest->getId());
-		foreach($quest->getRewardCommands() as $command) {
-			$this->getPlugin()->getServer()->dispatchCommand(new ConsoleCommandSender(), $command);
-		}
-		return true;
-	}
-
-	/**
 	 * @param int $id
 	 *
 	 * @return Quest
@@ -89,6 +52,42 @@ class QuestManager {
 			$this->quests[$id] = $this->plugin->getQuestStorage()->fetch($id);
 		}
 		return $this->quests[$id];
+	}
+
+	/**
+	 * @param Quest  $quest
+	 * @param Player $player
+	 *
+	 * @return bool
+	 */
+	public function startQuest(Quest $quest, Player $player): bool {
+		$message = $this->getPlugin()->getBlockQuestsConfig()->getQuestStartingFormat();
+		$processedMessage = str_replace("{STARTING_MESSAGE}", $quest->getStartingMessage() . TF::GREEN . TF::BOLD, str_replace("{QUEST_NAME}", TF::RESET . TF::AQUA . $quest->getQuestName(), str_replace("{QUEST_DESCRIPTION}", TF::GRAY . $quest->getQuestDescription(), $message)));
+		$player->sendMessage(TF::GREEN . $processedMessage);
+		$this->getPlugin()->getPlayerDatabase()->startQuest($player, $quest->getId());
+		return true;
+	}
+
+	/**
+	 * @return BlockQuests
+	 */
+	public function getPlugin(): BlockQuests {
+		return $this->plugin;
+	}
+
+	/**
+	 * @param Quest  $quest
+	 * @param Player $player
+	 *
+	 * @return bool
+	 */
+	public function finishQuest(Quest $quest, Player $player): bool {
+		$player->sendMessage(TF::GREEN . $quest->getFinishingMessage());
+		$this->getPlugin()->getPlayerDatabase()->finishQuest($player, $quest->getId());
+		foreach($quest->getRewardCommands() as $command) {
+			$this->getPlugin()->getServer()->dispatchCommand(new ConsoleCommandSender(), str_replace("{PLAYER}", $player->getName(), $command));
+		}
+		return true;
 	}
 
 	/**
