@@ -7,6 +7,7 @@ use BlockHorizons\BlockQuests\commands\quest_parameters\QuestCheckParameter;
 use BlockHorizons\BlockQuests\commands\quest_parameters\QuestCreateParameter;
 use BlockHorizons\BlockQuests\commands\quest_parameters\QuestDeleteParameter;
 use BlockHorizons\BlockQuests\commands\quest_parameters\QuestEditParameter;
+use BlockHorizons\BlockQuests\commands\quest_parameters\QuestHelpParameter;
 use BlockHorizons\BlockQuests\commands\quest_parameters\QuestResetParameter;
 use pocketmine\command\CommandSender;
 use pocketmine\utils\TextFormat;
@@ -45,6 +46,8 @@ class QuestCommand extends BlockQuestsCommand {
 			case "reset":
 			case "clear":
 				return (new QuestResetParameter($this->getPlugin(), $sender, $args))->perform();
+			case "help":
+				return (new QuestHelpParameter($this->getPlugin(), $sender, $args))->perform();
 		}
 		return false;
 	}

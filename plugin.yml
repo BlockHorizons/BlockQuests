@@ -38,4 +38,14 @@ permissions:
               blockquests.command.reset.others:
                 default: op
                 description: "Allows resetting quests data of other players."
+          blockquests.command.help:
+            default: false
+            description: "Allows usage of the help command."
+            children:
+              blockquests.command.help.default:
+                default: true
+                description: "Allows listing the blockquests help page for normal players."
+              blockquests.command.help.others:
+                default: op
+                description: "Allows listing the blockquests help page of operators.
 ...

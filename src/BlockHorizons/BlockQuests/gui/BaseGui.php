@@ -95,6 +95,7 @@ abstract class BaseGui {
 	public function openGui() {
 		$this->sendInitial();
 		$this->player->sendTip($this->initMessage);
+		$this->player->sendMessage($this->initMessage);
 		$this->getPlugin()->getGuiHandler()->setUsingGui($this->player, true, $this);
 	}
 
