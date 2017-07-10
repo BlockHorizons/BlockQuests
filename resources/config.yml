@@ -16,5 +16,5 @@ Player-Quests-Database: SQLite
 # {STARTING_MESSAGE}: The message set when creating/editing the quest.
 # {QUEST_NAME}: The name of the quest set when creating/editing the quest.
 # {QUEST_DESCRIPTION}: The description of the quest also set when creating/editing the quest.
-Quest-Starting-Format: {STARTING_MESSAGE}\nQuest Started: {QUEST_NAME}\n{QUEST_DESCRIPTION}
+Quest-Starting-Format: "{STARTING_MESSAGE}\nQuest Started: {QUEST_NAME}\n{QUEST_DESCRIPTION}"
 ...
