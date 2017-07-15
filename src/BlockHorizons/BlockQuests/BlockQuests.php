@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockQuests;
 
 use BlockHorizons\BlockQuests\commands\BlockQuestsCommand;

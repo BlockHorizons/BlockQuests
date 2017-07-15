@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockQuests\commands;
 
 use BlockHorizons\BlockQuests\BlockQuests;
@@ -25,7 +27,7 @@ class QuestCommand extends BlockQuestsCommand {
 	 *
 	 * @return bool
 	 */
-	public function execute(CommandSender $sender, $commandLabel, array $args): bool {
+	public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
 		if(count($args) < 1) {
 			$sender->sendMessage(TextFormat::RED . "[Usage] " . $this->getUsage());
 			return true;

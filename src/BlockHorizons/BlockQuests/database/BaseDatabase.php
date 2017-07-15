@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockQuests\database;
 
 use BlockHorizons\BlockQuests\BlockQuests;

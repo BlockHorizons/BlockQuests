@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace BlockHorizons\BlockQuests\quests;
 
 use BlockHorizons\BlockQuests\BlockQuests;
@@ -34,7 +36,7 @@ class QuestManager {
 			}
 			$data = yaml_parse_file($path);
 			if((new QuestValidator($data))->getResult() === false) {
-				$this->plugin->getLogger()->debug("Invalid quest content file \'" . $quest . "\' found. Skipping...");
+				$this->plugin->getLogger()->debug("Invalid quest content file '" . $quest . "' found. Skipping...");
 				continue;
 			}
 			$quests[] = $this->getQuestById((int) $questId);
