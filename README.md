@@ -16,6 +16,6 @@ To install:
 [![Poggit-CI](https://poggit.pmmp.io/ci.shield/BlockHorizons/BlockQuests/BlockQuests)](https://poggit.pmmp.io/ci/BlockHorizons/BlockQuests/BlockQuests)<br>
 
 ### Commands and Permissions
-BlockPets has permissions for every pet and command, to wall off the permissions for players but still allow them to have at least some way to spawn pets. The most up to date list of permissions can be found in the [plugin.yml file](https://github.com/BlockHorizons/BlockPets/blob/master/plugin.yml)<br>
+BlockQuests has permissions for every command. The most up to date list of permissions can be found in the [plugin.yml file](https://github.com/BlockHorizons/BlockQuests/blob/master/plugin.yml)<br>
 
 > BlockQuests contains a hand full of commands to check, create and remove quests. These commands can be found using the /blockquests(bq) \<help\> command. This command will list all BlockQuests parameters.
