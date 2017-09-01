@@ -24,7 +24,7 @@ abstract class BaseGui {
 	protected $player;
 	/** @var Item[] */
 	protected $previousContents = [];
-	/** @var Item[] */
+	/** @var Item[][] */
 	protected $defaults = [];
 	/** @var int */
 	protected $page = 1;
@@ -94,14 +94,14 @@ abstract class BaseGui {
 		return $this->plugin;
 	}
 
-	public function openGui() {
+	public function openGui(): void {
 		$this->sendInitial();
 		$this->player->sendTip($this->initMessage);
 		$this->player->sendMessage($this->initMessage);
 		$this->getPlugin()->getGuiHandler()->setUsingGui($this->player, true, $this);
 	}
 
-	protected function sendInitial() {
+	protected function sendInitial(): void {
 		$this->previousContents = $this->player->getInventory()->getContents();
 		$this->player->getInventory()->resetHotbar();
 
@@ -116,7 +116,7 @@ abstract class BaseGui {
 	/**
 	 * @param bool $cancelled
 	 */
-	public function closeGui(bool $cancelled = true) {
+	public function closeGui(bool $cancelled = true): void {
 		$this->player->getInventory()->setContents($this->previousContents);
 
 		if(!$cancelled && isset($this->quest)) {

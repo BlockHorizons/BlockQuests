@@ -27,7 +27,7 @@ class GuiListener implements Listener {
 	/**
 	 * @param PlayerChatEvent $event
 	 */
-	public function onChat(PlayerChatEvent $event) {
+	public function onChat(PlayerChatEvent $event): void {
 		if($this->getPlugin()->getGuiHandler()->isUsingGui($event->getPlayer())) {
 			$output = null;
 			$gui = $this->getPlugin()->getGuiHandler()->getGui($event->getPlayer());
@@ -88,7 +88,7 @@ class GuiListener implements Listener {
 	/**
 	 * @param PlayerItemHeldEvent $event
 	 */
-	public function onItemHeld(PlayerItemHeldEvent $event) {
+	public function onItemHeld(PlayerItemHeldEvent $event): void {
 		if($this->getPlugin()->getGuiHandler()->isUsingGui($event->getPlayer())) {
 			if(!isset($event->getItem()->getNamedTag()->bqGuiInputType)) {
 				return;
@@ -127,7 +127,7 @@ class GuiListener implements Listener {
 	/**
 	 * @param EntityInventoryChangeEvent $event
 	 */
-	public function onInventoryChange(EntityInventoryChangeEvent $event) {
+	public function onInventoryChange(EntityInventoryChangeEvent $event): void {
 		$player = $event->getEntity();
 		if($player instanceof Player) {
 			if($this->getPlugin()->getGuiHandler()->isUsingGui($player)) {
@@ -142,7 +142,7 @@ class GuiListener implements Listener {
 	/**
 	 * @param PlayerQuitEvent $event
 	 */
-	public function onQuit(PlayerQuitEvent $event) {
+	public function onQuit(PlayerQuitEvent $event): void {
 		if($this->getPlugin()->getGuiHandler()->isUsingGui($event->getPlayer())) {
 			$this->getPlugin()->getGuiHandler()->setUsingGui($event->getPlayer(), false, $this->getPlugin()->getGuiHandler()->getGui($event->getPlayer()));
 		}
@@ -151,7 +151,7 @@ class GuiListener implements Listener {
 	/**
 	 * @param PlayerInteractEvent $event
 	 */
-	public function onInteract(PlayerInteractEvent $event) {
+	public function onInteract(PlayerInteractEvent $event): void {
 		if($this->getPlugin()->getGuiHandler()->isUsingGui($event->getPlayer())) {
 			$gui = $this->getPlugin()->getGuiHandler()->getGui($event->getPlayer());
 			switch($event->getItem()->getNamedTag()->bqGuiInputType->getValue()) {

@@ -31,7 +31,7 @@ class BlockQuests extends PluginBase {
 	/** @var BaseDatabase */
 	private $playerStorage;
 
-	public function onEnable() {
+	public function onEnable(): void {
 		$this->saveDefaultConfig();
 		if(!is_dir($this->getDataFolder() . "quests/")) {
 			mkdir($this->getDataFolder() . "quests/");
@@ -46,7 +46,7 @@ class BlockQuests extends PluginBase {
 		$this->initializeDatabase();
 	}
 
-	public function registerCommands() {
+	public function registerCommands(): void {
 		$commands = [
 			new QuestCommand($this)
 		];
@@ -56,7 +56,7 @@ class BlockQuests extends PluginBase {
 		}
 	}
 
-	public function registerListeners() {
+	public function registerListeners(): void {
 		$listeners = [
 			new GuiListener($this),
 			new EventListener($this)

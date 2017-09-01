@@ -13,7 +13,7 @@ class GuiHandler {
 	public $allowInventoryChange = false;
 	private $plugin;
 	private $usingGui = [];
-	/** @var BaseGui */
+	/** @var BaseGui[] */
 	private $gui = [];
 
 	public function __construct(BlockQuests $plugin) {
@@ -33,7 +33,7 @@ class GuiHandler {
 	 * @param BaseGui $gui
 	 * @param bool    $finishCancelled
 	 */
-	public function setUsingGui(Player $player, bool $value = true, BaseGui $gui, bool $finishCancelled = true) {
+	public function setUsingGui(Player $player, bool $value = true, BaseGui $gui, bool $finishCancelled = true): void {
 		$this->usingGui[$player->getId()] = $value;
 
 		if($value === true) {
@@ -52,7 +52,7 @@ class GuiHandler {
 	 *
 	 * @return int
 	 */
-	public function getGuiIdByPlayer(Player $player) {
+	public function getGuiIdByPlayer(Player $player): ?int {
 		/**
 		 * @var int     $id
 		 * @var BaseGui $gui
@@ -79,7 +79,7 @@ class GuiHandler {
 	 *
 	 * @return BaseGui|null
 	 */
-	public function getGui(Player $player) {
+	public function getGui(Player $player): ?BaseGui {
 		return $this->getGuiById($this->getGuiIdByPlayer($player));
 	}
 
@@ -88,7 +88,7 @@ class GuiHandler {
 	 *
 	 * @return BaseGui|null
 	 */
-	public function getGuiById(int $id) {
+	public function getGuiById(int $id): ?BaseGui {
 		return isset($this->gui[$id]) ? $this->gui[$id] : null;
 	}
 }

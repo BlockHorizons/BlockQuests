@@ -19,7 +19,7 @@ class BlockQuestsConfig {
 		$this->collectPreferences();
 	}
 
-	public function collectPreferences() {
+	public function collectPreferences(): void {
 		$data = yaml_parse_file($this->getPlugin()->getDataFolder() . "config.yml");
 		$this->settings = $data;
 	}

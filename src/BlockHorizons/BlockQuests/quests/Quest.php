@@ -71,7 +71,7 @@ class Quest {
 	/**
 	 * @param string $name
 	 */
-	public function setQuestName(string $name) {
+	public function setQuestName(string $name): void {
 		$this->questName = $name;
 	}
 
@@ -85,7 +85,7 @@ class Quest {
 	/**
 	 * @param string $description
 	 */
-	public function setQuestDescription(string $description) {
+	public function setQuestDescription(string $description): void {
 		$this->questDescription = $description;
 	}
 
@@ -99,7 +99,7 @@ class Quest {
 	/**
 	 * @param int $level
 	 */
-	public function setStartExperienceLevel(int $level) {
+	public function setStartExperienceLevel(int $level): void {
 		$this->startExperienceLevel = $level;
 	}
 
@@ -113,7 +113,7 @@ class Quest {
 	/**
 	 * @param string[] $commands
 	 */
-	public function setRewardCommands(array $commands) {
+	public function setRewardCommands(array $commands): void {
 		$this->rewardCommands = $commands;
 	}
 
@@ -127,7 +127,7 @@ class Quest {
 	/**
 	 * @param string $message
 	 */
-	public function setStartingMessage(string $message) {
+	public function setStartingMessage(string $message): void {
 		$this->startingMessage = $message;
 	}
 
@@ -141,7 +141,7 @@ class Quest {
 	/**
 	 * @param string $message
 	 */
-	public function setFinishingMessage(string $message) {
+	public function setFinishingMessage(string $message): void {
 		$this->finishingMessage = $message;
 	}
 
@@ -155,7 +155,7 @@ class Quest {
 	/**
 	 * @param string $message
 	 */
-	public function setStartedMessage(string $message) {
+	public function setStartedMessage(string $message): void {
 		$this->startedMessage = $message;
 	}
 
@@ -169,7 +169,7 @@ class Quest {
 	/**
 	 * @param string $message
 	 */
-	public function setFinishedMessage(string $message) {
+	public function setFinishedMessage(string $message): void {
 		$this->finishedMessage = $message;
 	}
 
@@ -183,7 +183,7 @@ class Quest {
 	/**
 	 * @param string $message
 	 */
-	public function setMissingStartItemsMessage(string $message) {
+	public function setMissingStartItemsMessage(string $message): void {
 		$this->missingStartItemsMessage = $message;
 	}
 
@@ -197,7 +197,7 @@ class Quest {
 	/**
 	 * @param string $message
 	 */
-	public function setInsufficientStartExperienceMessage(string $message) {
+	public function setInsufficientStartExperienceMessage(string $message): void {
 		$this->insufficientStartExperienceMessage = $message;
 	}
 
@@ -265,7 +265,7 @@ class Quest {
 	/**
 	 * @param string[] $items
 	 */
-	public function setStartRequiredItems(array $items) {
+	public function setStartRequiredItems(array $items): void {
 		$this->startRequiredItems = $items;
 	}
 
@@ -297,7 +297,7 @@ class Quest {
 	/**
 	 * @param string[] $items
 	 */
-	public function setFinishRequiredItems(array $items) {
+	public function setFinishRequiredItems(array $items): void {
 		$this->finishRequiredItems = $items;
 	}
 }
