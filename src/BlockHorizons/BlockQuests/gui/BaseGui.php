@@ -103,7 +103,7 @@ abstract class BaseGui {
 
 	protected function sendInitial(): void {
 		$this->previousContents = $this->player->getInventory()->getContents();
-		$this->player->getInventory()->resetHotbar();
+		$this->player->getInventory()->clearAll();
 
 		foreach($this->defaults["static"] as $slot => $item) {
 			$this->player->getInventory()->setItem($slot, $item);
